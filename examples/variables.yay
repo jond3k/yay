@@ -1,0 +1,10 @@
+#!/usr/bin/yay
+# Shows off variables
+
+debug is @boring
+error is @serious
+warn is @interesting
+
+all @boring are hidden
+all @interesting are yellow
+all @serious are red lines

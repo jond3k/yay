@@ -1,0 +1,5 @@
+#!/usr/bin/yay
+# Highlights a lot of different log messages
+
+use syslog
+use log4x
