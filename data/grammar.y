@@ -1,10 +1,6 @@
 # the yay language grammar
 
 class Parser
-  prechigh
-    nonassoc UMINUS
-    left 'and'
-  preclow
 rule
 
   main: expressions
@@ -51,7 +47,7 @@ rule
          |
 
   case_opt: case
-          | 
+          |
 end
 
 ---- header
@@ -80,7 +76,7 @@ class Yay
   end
 
 ---- footer
-end #Yay
+end # class Yay
 
 parser = Yay::Parser.new
 while true
