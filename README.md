@@ -1,7 +1,7 @@
 yay does things like
 
 echo "i have some cheese" | yay cheese is yellow
-echo "i want to see errors, warnings and info differently!" | yay errors warnings are red and info is green
+echo "i want to see [error], [warning] and [info] differently!" | yay error warning are red and info is green
 
 it colours log files and data streams so you can more easily spot important information and patterns
 
