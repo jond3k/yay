@@ -10,24 +10,26 @@ class LexerTest < Test::Unit::TestCase
   def test_new
     assert(Yay::Lexer.new.kind_of? Yay::Lexer)
   end
-
-  # a custom assert
-  def assert_token(token, type=nil, value=nil, line=nil, word=nil, msg=nil)
-    msg = "For test |#{msg}|:"
-    
-    assert_equal token[0], type,  msg unless type.nil?
-    assert_equal token[1], value, msg unless value.nil?
-    assert_equal token[2], line,  msg unless line.nil?
-    assert_equal token[3], word,  msg unless word.nil?
-  end
   
   # ensure the lexer always returns eof if it's not been given data
   def test_without_file
     lexer = Yay::Lexer.new
-    assert_token lexer.next_token, :eof
-    assert_token lexer.next_token, :eof
+    assert_equal [:eof], lexer.next_token
+    assert_equal [:eof], lexer.next_token
+  end
+
+  def test_normalize_token_doublequotes
+    lexer = Yay::Lexer.new " \"a\\\"bc\" "
+    assert_equal [:literal, "a\"bc"], lexer.next_token
+    assert_equal [:eof], lexer.next_token
   end
   
+  def test_unmatched_error
+    lexer = Yay::Lexer.new "\"a b c\\\""
+    assert_equal [:junk, "\"a b c\\\""], lexer.next_token
+    assert_equal [:eof], lexer.next_token
+  end
+
   # we load lexer tests from a data file. ensure the file is structured in the
   # correct way
   def test_lexer_valid_data
@@ -46,22 +48,15 @@ class LexerTest < Test::Unit::TestCase
     YAY_LEXER_TESTS.each_pair { |input, all_expected|
 
       lexer = Yay::Lexer.new
-      lexer.use_file_contents input
+      lexer.use_string input
 
-      # iterate each expectd token
+      # iterate each expected token
       all_expected.each { |expected| 
-        assert_token(
-          lexer.next_token,
-          expected[0],
-          expected[1],
-          expected[2],
-          expected[3],
-          input
-        )
+        assert_equal expected, lexer.next_token, "For |#{input}|"
       }
 
       # check for eof at the end
-      assert_token lexer.next_token, :eof
+      assert_equal [:eof], lexer.next_token
     }
   end
   

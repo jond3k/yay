@@ -51,42 +51,37 @@ rule
 end
 
 ---- header
+require 'yay/engine'
+require 'yay/lexer'
+
 class Yay
 ---- inner
   
+  # the engine tracks symbols, etc
+  def engine=(engine)
+    raise ArgumentError, "engine" unless engine.kind_of? Yay::Engine
+    @engine = engine
+  end
+
+  # the lexer is where we get our tokens from
+  def lexer=(lexer)
+    raise ArgumentError, "lexer" unless lexer.kind_of? Yay::Lexer
+    @lexer = lexer
+  end
+
+  # parse a string
   def parse(str)
-    @q = []
-    until str.empty?
-      case str
-      when /\A\s+/
-      when /\A\d+/
-        @q.push [:NUMBER, $&.to_i]
-      when /\A.|\n/o
-        s = $&
-        @q.push [s, s]
-      end
-      str = $'
-    end
-    @q.push [false, '$end']
+    raise ArgumentError, "string" unless str.kind_of? String
+    raise ArgumentError, "lexer" unless @lexer.kind_of? Yay::Lexer
+    raise ArgumentError, "engine" unless @engine.kind_of? Yay::Engine
+    @lexer.use_string(str)
     do_parse
   end
 
+  # get the next token
   def next_token
-    @q.shift
+    @lexer.next_token
   end
 
 ---- footer
 end # class Yay
-
-parser = Yay::Parser.new
-while true
-  puts
-  print '? '
-  str = gets.chop!
-  break if /q/i =~ str
-  begin
-    puts "= #{parser.parse(str)}"
-  rescue ParseError
-    puts $!
-  end
-end

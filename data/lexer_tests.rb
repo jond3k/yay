@@ -15,7 +15,7 @@ YAY_LEXER_TESTS = {
     [:literal, "h1i2j"]
   ],
 
-  # quoted literals
+  # double quotes
   "\"abc\"" => [
     [:literal, "abc"]
   ],
@@ -23,10 +23,12 @@ YAY_LEXER_TESTS = {
   "\"a b c\"" => [
     [:literal, "a b c"]
   ],
-  
- # "\"a b c\\\"" => [
- #   [:literal, "a b c\\"]
- # ],
+
+  "123 \"abc\" def" => [
+    [:literal, "123"],
+    [:literal, "abc"],
+    [:literal, "def"]
+  ],
 
   " \"abc\\\"def\\\"hij\"" => [
     [:literal, "abc\"def\"hij"]
@@ -36,34 +38,67 @@ YAY_LEXER_TESTS = {
     [:literal, "abc\"def\"hij"],
     [:literal, "123\"456\"789"]
   ],
-=begin
+
   # regular expressions  
   "/abc/" => [
     [:regex, "/abc/"]
   ],
   
-  "/abc def/" => [
-    [:regex, "/abc def/"]
-  ],
-  
-  "/abc\/def/" => [
-    [:regex, "/abc\/def/"]
+  "/abc" => [
+    [:junk, "/abc"]
   ],
   
   "/abc/i" => [
     [:regex, "/abc/i"]
   ],
   
-  "/abc/i 123 /def/ /a\/b/ efg" => [
-    [:regex,   "/abc/i"],
-    [:literal, "123"],
-    [:regex,   "/def/"],
-    [:regex,   "/a\/b/"],
-    [:literal, "efg"],
+  "/abc def/" => [
+    [:regex, "/abc def/"]
   ],
   
+  # FIXME
+  #"/abc\/def/" => [
+  #  [:regex, "/abc\/def/"]
+  #],
+  
+  # FIXME
+  #"/abc\/def/i" => [
+  #  [:regex, "/abc\/def/i"]
+  #],
+
+  "/abc/ 123" => [
+    [:regex, "/abc/"],
+    [:literal, "123"],
+  ],
+  
+  "/abc/ 123 /def/" => [
+    [:regex, "/abc/"],
+    [:literal, "123"],
+    [:regex, "/def/"],
+  ],
+  
+  "/abc/i 123 /def/" => [
+    [:regex, "/abc/i"],
+    [:literal, "123"],
+    [:regex, "/def/"],
+  ],
+  
+  # FIXME
+  #"/abc/i 123 /def/ /abc\/def/ efg" => [
+  #  [:regex,   "/abc/i"],
+  #  [:literal, "123"],
+  #  [:regex,   "/def/"],
+  #  [:regex,   "/abc\/def/"],
+  #  [:literal, "efg"],
+  #], 
+  
+  # regex as a string
   "\"/abc/i\"" => [
     [:literal, "/abc/i"]
   ],
-=end
+
+  "\"/abc/ /def\"" => [
+    [:literal, "/abc/ /def"]
+  ],
+  
 }
