@@ -1,6 +1,6 @@
 # the yay language grammar
 
-class Yay
+class Parser
   prechigh
     nonassoc UMINUS
     left 'and'
@@ -15,7 +15,6 @@ rule
 
   expression: phrase
             | command
-            | expression
 
   phrase: subjects verbs_opt predicate
         | subjects predicate
@@ -23,8 +22,8 @@ rule
   verbs_opt: verbs
            |
 
-  verbs: verb verbs
-       | verb
+  verbs: verb
+       | verb verbs
 
   verb: is
       | is a
@@ -56,7 +55,7 @@ rule
 end
 
 ---- header
-# $Id$
+class Yay
 ---- inner
   
   def parse(str)
@@ -81,11 +80,9 @@ end
   end
 
 ---- footer
+end #Yay
 
-parser = Calcp.new
-puts
-puts 'type "Q" to quit.'
-puts
+parser = Yay::Parser.new
 while true
   puts
   print '? '
