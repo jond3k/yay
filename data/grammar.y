@@ -1,87 +1,42 @@
 # the yay language grammar
 
-class Parser
+class ParserGen
 rule
 
-  main: expressions
-      |
+  body: command_list                      {  }
+      | 
 
-  expressions: expression
-             | expression and_opt expressions
+  command_list: command command_list      {  }
+              | command                   {  }
 
-  expression: phrase
-            | command
+  command: string_list verbs_opt value    { string_assign val[0], val[2] }
+         | variable verbs_opt value       { var_assign    val[0], val[2] }
+         | include literal                { load_file     val[0] }
 
-  phrase: subjects verbs_opt predicate
-        | subjects predicate
+  string_list: string and_opt string_list { val[2].push(val[0]); result = val[2] }
+             | string                     { result = [val[0]] }
 
-  verbs_opt: verbs
-           |
+  string: literal                         { result = val[0] }
+        | regex                           { result = handle_regex(val[0]) }
 
-  verbs: verb
-       | verb verbs
+  value: colour line_opt                  { result =  }
+       | colour and_opt colour line_opt   { result = }
+       | variable                         { result =  }
 
-  verb: is
-      | is a
-      | are
+  and_opt: and                            {  }
+         |                                {  }
 
-  subjects: subject
-          | subject and_opt subjects
+  line_opt: line                          {  }
+          |                               {  }
 
-  subject: regex
-         | literal
-         | literal_regex
+  verbs_opt: verb verbs_opt               {  }
+           |                              {  }
 
-  predicate: variable
-           | effect
-
-  command: case_opt sensitive
-         | case_opt insensitive
-         | include_words filename
-         | all the_opt predicate verb_opt predicate
-
-  and_opt: and
-         |
-
-  the_opt: the
-         |
-
-  case_opt: case
-          |
 end
 
 ---- header
-require 'yay/engine'
-require 'yay/lexer'
-
 class Yay
 ---- inner
-  
-  # the engine tracks symbols, etc
-  def engine=(engine)
-    raise ArgumentError, "engine" unless engine.kind_of? Yay::Engine
-    @engine = engine
-  end
-
-  # the lexer is where we get our tokens from
-  def lexer=(lexer)
-    raise ArgumentError, "lexer" unless lexer.kind_of? Yay::Lexer
-    @lexer = lexer
-  end
-
-  # parse a string
-  def parse(str)
-    raise ArgumentError, "string" unless str.kind_of? String
-    raise ArgumentError, "lexer" unless @lexer.kind_of? Yay::Lexer
-    raise ArgumentError, "engine" unless @engine.kind_of? Yay::Engine
-    @lexer.use_string(str)
-    do_parse
-  end
-
-  # get the next token
-  def next_token
-    @lexer.next_token
-  end
 
 ---- footer
 end # class Yay

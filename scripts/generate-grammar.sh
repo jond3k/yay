@@ -10,7 +10,7 @@ fi
 
 flags=
 src="$base/../data/grammar.y"
-dest="$base/../lib/yay/parser.rb"
+dest="$base/../lib/yay/parser_gen.rb"
 
 command="$tool $flags $src -o $dest"
 

@@ -19,6 +19,6 @@ class Yay
 
       # everything else matched must be a plain old term
       :literal        => /\w+/,
-    }    
+    }
   end
 end

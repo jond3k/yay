@@ -14,20 +14,20 @@ class LexerTest < Test::Unit::TestCase
   # ensure the lexer always returns eof if it's not been given data
   def test_without_file
     lexer = Yay::Lexer.new
-    assert_equal [:eof], lexer.next_token
-    assert_equal [:eof], lexer.next_token
+    assert_equal nil, lexer.next_token
+    assert_equal nil, lexer.next_token
   end
 
   def test_normalize_token_doublequotes
     lexer = Yay::Lexer.new " \"a\\\"bc\" "
     assert_equal [:literal, "a\"bc"], lexer.next_token
-    assert_equal [:eof], lexer.next_token
+    assert_equal nil, lexer.next_token
   end
   
   def test_unmatched_error
     lexer = Yay::Lexer.new "\"a b c\\\""
     assert_equal [:junk, "\"a b c\\\""], lexer.next_token
-    assert_equal [:eof], lexer.next_token
+    assert_equal nil, lexer.next_token
   end
 
   # we load lexer tests from a data file. ensure the file is structured in the
@@ -56,7 +56,7 @@ class LexerTest < Test::Unit::TestCase
       }
 
       # check for eof at the end
-      assert_equal [:eof], lexer.next_token
+      assert_equal nil, lexer.next_token
     }
   end
   

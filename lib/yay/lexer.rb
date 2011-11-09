@@ -17,7 +17,7 @@ class Yay
        
     # get the next token in the file
     def next_token
-      return [:eof] if @scanner.empty?
+      return nil if @scanner.empty?
 
       unless @scanner.empty?
         YAY_LEXER_PATTERNS.each_pair { |type, regex| 
