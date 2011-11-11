@@ -1,4 +1,4 @@
-require 'yay/engine'
+require 'yay/session'
 
 class Yay
   class Application
@@ -27,7 +27,7 @@ class Yay
       
       return if @args == DO_NOTHING_ARGS
       
-      @engine = Yay::Engine.new
+      @engine = Yay::Session.new
       @engine.process_args(@args)
 
       return if @args == ONLY_LOAD_ARGS

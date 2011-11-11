@@ -20,7 +20,7 @@ class Yay
       return nil if @scanner.empty?
 
       unless @scanner.empty?
-        YAY_LEXER_PATTERNS.each_pair { |type, regex| 
+        get_patterns.each_pair { |type, regex| 
           value = @scanner.scan(regex)
           next unless value
           return next_token if type == :whitespace

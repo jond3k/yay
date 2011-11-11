@@ -34,9 +34,9 @@ class LexerTest < Test::Unit::TestCase
   # correct way
   def test_lexer_valid_data
     
-    assert YAY_LEXER_TESTS.kind_of? Hash
+    assert Yay::LEXER_TESTS.kind_of? Hash
 
-    YAY_LEXER_TESTS.each_pair { |input, expected| 
+    Yay::LEXER_TESTS.each_pair { |input, expected| 
       assert input.kind_of? String
       assert expected.kind_of? Array
     }
@@ -45,7 +45,7 @@ class LexerTest < Test::Unit::TestCase
 
   # run the lexer tests we loaded from the data file
   def test_lexer_run
-    YAY_LEXER_TESTS.each_pair { |input, all_expected|
+    Yay::LEXER_TESTS.each_pair { |input, all_expected|
 
       lexer = Yay::Lexer.new
       lexer.use_string input

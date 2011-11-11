@@ -9,9 +9,21 @@ rule
   command_list: command command_list      {  }
               | command                   {  }
 
-  command: string_list verbs_opt value    { string_assign val[0], val[2] }
-         | variable verbs_opt value       { var_assign    val[0], val[2] }
-         | include literal                { load_file     val[0] }
+  command: match
+         | assignment
+         | substitution
+         | equivalence
+         | include_file
+
+  match:  string_list verbs_opt colour_list line_opt { @session.add_match val[0], handle_colours(val[2]), val[3] }
+
+  assignment: string_list verbs_opt variable { @session.add_assignment val[0], val[2] }
+
+  substitution: variable verbs_opt colour_list line_opt { @session.add_substitution val[0], handle_colours(val[2]), val[3] }
+
+  equivalence: variable verbs_opt variable   { @session.add_equivalence val[0], val[2]  }
+
+  include_file: include literal           { @session.load_file val[0] }
 
   string_list: string and_opt string_list { val[2].push(val[0]); result = val[2] }
              | string                     { result = [val[0]] }
@@ -19,18 +31,17 @@ rule
   string: literal                         { result = val[0] }
         | regex                           { result = handle_regex(val[0]) }
 
-  value: colour line_opt                  { result =  }
-       | colour and_opt colour line_opt   { result = }
-       | variable                         { result =  }
+  colour_list: colour colour_list         { val[1].push(val[0].to_sym); result = val[1] }
+             | colour                     { result = [val[0].to_sym] }
 
-  and_opt: and                            {  }
-         |                                {  }
+  and_opt: and                            { result = nil }
+         |                                { }
 
-  line_opt: line                          {  }
-          |                               {  }
+  line_opt: line                          { result = true }
+          |                               { result = false }
 
-  verbs_opt: verb verbs_opt               {  }
-           |                              {  }
+  verbs_opt: verb verbs_opt               { result = nil }
+           |                              { }
 
 end
 

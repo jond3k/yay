@@ -2,7 +2,7 @@ require 'yay/parser'
 require 'yay/lexer'
 
 class Yay
-  class Engine
+  class Session
     
     # process commandline arguments as if they were from a yay file
     def process_args args
@@ -11,15 +11,27 @@ class Yay
     end
     
     # process a string of yay commands
-    def process_string string
+    def load_string string
       parser = Yay::Parser.new
       parser.engine = self
       parser.lexer  = Yay::Lexer.new
       parser.parse string
     end
     
-    def handle_stream input, output
-      
+    def add_match strings, colours, is_line
+      puts "add_match #{strings.join(',')} = #{colours}, line?=#{is_line}"
+    end
+    
+    def add_assignment strings, variable
+      puts "add_assignment #{strings.join(',')} = #{variable}"
+    end
+    
+    def add_equivalence x, y
+      puts "add_equivalence #{x} = #{y}"
+    end
+
+    def load_file str
+      puts "load #{str}"
     end
   end
 end
