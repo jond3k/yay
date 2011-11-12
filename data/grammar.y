@@ -6,8 +6,8 @@ rule
   body: command_list                      {  }
       | 
 
-  command_list: command command_list      {  }
-              | command                   {  }
+  command_list: command and_opt command_list      {  }
+              | command                           {  }
 
   command: match
          | assignment
@@ -15,23 +15,23 @@ rule
          | equivalence
          | include_file
 
-  match:  string_list verbs_opt colour_list line_opt { @session.add_match val[0], handle_colours(val[2]), val[3] }
+  match:  string_list verbs_opt colour_list line_opt { add_match val[0], handle_colours(val[2]), val[3] }
 
-  assignment: string_list verbs_opt variable { @session.add_assignment val[0], val[2] }
+  assignment: string_list verbs_opt variable { add_assignment val[0], val[2] }
 
-  substitution: variable verbs_opt colour_list line_opt { @session.add_substitution val[0], handle_colours(val[2]), val[3] }
+  substitution: variable verbs_opt colour_list line_opt { add_substitution val[0], handle_colours(val[2]), val[3] }
 
-  equivalence: variable verbs_opt variable   { @session.add_equivalence val[0], val[2]  }
+  equivalence: variable verbs_opt variable   { add_equivalence val[0], val[2]  }
 
-  include_file: include literal           { @session.load_file val[0] }
+  include_file: include literal           { load_file val[0] }
 
-  string_list: string and_opt string_list { val[2].push(val[0]); result = val[2] }
+  string_list: string and_opt string_list { val[2].unshift(val[0]); result = val[2] }
              | string                     { result = [val[0]] }
 
-  string: literal                         { result = val[0] }
+  string: literal                         { result = handle_string(val[0]) }
         | regex                           { result = handle_regex(val[0]) }
 
-  colour_list: colour colour_list         { val[1].push(val[0].to_sym); result = val[1] }
+  colour_list: colour colour_list         { val[1].unshift(val[0].to_sym); result = val[1] }
              | colour                     { result = [val[0].to_sym] }
 
   and_opt: and                            { result = nil }

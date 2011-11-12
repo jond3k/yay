@@ -11,7 +11,7 @@ class ParserTest < Test::Unit::TestCase
 
   # we load parser tests from a data file. ensure the file is structured in the
   # correct way
-  def test_lexer_valid_data
+  def test_parser_valid_data
     
     assert Yay::PARSER_TESTS.kind_of? Hash
 
@@ -23,7 +23,7 @@ class ParserTest < Test::Unit::TestCase
   end
 
   # run the lexer tests we loaded from the data file
-  def test_lexer_run
+  def test_parser_run
     Yay::PARSER_TESTS.each_pair { |input, expected|
       parser = Yay::Parser.new
       assert_equal expected, parser.parse(input), "For |#{input}|"

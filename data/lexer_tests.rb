@@ -147,5 +147,11 @@ LEXER_TESTS = {
     [:literal, "/abc/ /def"]
   ],
   
+  # and
+  "and cheese and" => [
+    [:and, "and"],
+    [:literal, "cheese"],
+    [:and, "and"]
+  ],    
 }
 end

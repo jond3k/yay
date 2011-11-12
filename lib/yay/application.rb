@@ -1,4 +1,4 @@
-require 'yay/session'
+require 'yay/parser'
 
 class Yay
   class Application
@@ -27,8 +27,8 @@ class Yay
       
       return if @args == DO_NOTHING_ARGS
       
-      @engine = Yay::Session.new
-      @engine.process_args(@args)
+      @engine = Yay::Parser.new
+      @engine.parse_args(@args)
 
       return if @args == ONLY_LOAD_ARGS
       

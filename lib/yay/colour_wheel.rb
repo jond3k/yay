@@ -6,16 +6,18 @@ class Yay
     
     # not colours as such. commandline support varies
     MISC = {
-      :reset      => 0,
-      :bright     => 1,
-      :dim        => 2,
-      :underscore => 4,
-      :blink      => 5,
-      :reverse    => 7,
-      :hidden     => 8,	
+      :reset       => 0,
+      :bright      => 1,
+      :dim         => 2,
+      :underscore  => 4,
+      :blink       => 5,
+      :reverse     => 7,
+      :hidden      => 8,	
       
-      :normal     => 0, #alias
-      :invert     => 7, #alias
+      :normal      => 0, #alias
+      :invert      => 7, #alias
+      :inverted    => 7, #alias
+      :underscored => 4, #alias
     }
     
     FG = {
