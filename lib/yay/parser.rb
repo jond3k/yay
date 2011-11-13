@@ -31,23 +31,25 @@ class Yay
     end
     
     def already_substituted_warning variable
-      raise "Variable #{variable} has already been substituted with #{@substitutions[variable]}"
+      raise "Variable #{variable} has already been assigned"
     end
 
     # add a VARIABLE = COLOUR match rule so we can substitute variables later
     def add_substitution variable, colours, is_line
-      already_substituted_warning if @substitutions[variable]
-      @substitutions[variable] = [colours, is_line]
+      already_substituted_warning variable if @var_to_colours[variable] || @var_to_var[variable]
+      @var_to_colours[variable] = [colours, is_line]
     end
 
     # add a STRING = VARIABLE match rule. the variable will be substuted later
     def add_assignment strings, variable
-      @assignments.push [strings, variable]
+      strings.each { |string|
+        @match_to_var.push [string, variable]
+      }
     end
     
     # add a VARIABLE = VARIABLE equivalence rule. x will be substituted later
     def add_equivalence x, y
-      @equivalence.push [x, y]
+      @var_to_var[x] = y
     end
 
     def load_file str
@@ -87,15 +89,24 @@ class Yay
     end
     
     # 
-    def resolve_equivalence variable
-      path = [variable]
-      until current.nil?
-        current = @assignment[current]
-        circular_reference_error(path) if path.index(current).nil?
-        path.shift path
+    def resolve_variable variable
+
+      path    = []
+      result  = nil
+      current = variable
+
+      while true 
+        # detect circular references
+        circular_reference_error(path) unless path.index(current).nil?
+        path.unshift current
         
-        result  = @substitutions[current]
+        # see if this variable has a value
+        result  = @var_to_colours[current]
         break if result
+        
+        # see if this variable is a reference to another variable
+        current = @var_to_var[current]
+        break if current.nil?
       end
       
       unresolved_substitution_error variable unless result
@@ -103,7 +114,12 @@ class Yay
     end
     
     def variable_substitutions
-      
+      @match_to_var.each { |ref| 
+        string   = ref[0]
+        variable = ref[1]
+        result   = resolve_variable(variable)
+        add_match(string, result[0], result[1])
+      }
     end
 
     # process commandline arguments as if they were from a yay file
@@ -114,10 +130,11 @@ class Yay
     
     # parse a string
     def parse(str)
-      @rules         = []
-      @equivalence   = []
-      @assignments   = []
-      @substitutions = {}
+      @rules          = []
+
+      @var_to_colours = {}
+      @var_to_var     = {}
+      @match_to_var   = []
 
       @lexer = Yay::Lexer.new unless @lexer
       @lexer.use_string(str)

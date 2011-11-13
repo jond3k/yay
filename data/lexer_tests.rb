@@ -153,5 +153,19 @@ LEXER_TESTS = {
     [:literal, "cheese"],
     [:and, "and"]
   ],    
+  
+  # quoted and
+  "\"and\"" => [
+    [:literal, "and"]
+  ],
+  
+  # commas
+  "mushroom, chicken and pasta" => [
+    [:literal, "mushroom"],
+    [:and, ","],
+    [:literal, "chicken"],
+    [:and, "and"],
+    [:literal, "pasta"]
+  ],
 }
 end

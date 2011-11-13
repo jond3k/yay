@@ -118,10 +118,28 @@ PARSER_TESTS = {
     ['apples',  [ColourWheel::MISC[:normal], ColourWheel::MISC[:invert]], true],
   ],
 
-  # two commands
-  "apples are @nice and @nice are green" => [
+  # a basic substitution
+  "apples are @nice and @nice are green lines" => [
     ['apples',  [ColourWheel::FG[:green]], true],
-  ],    
+  ],
+  
+  # a more complicated substitution
+  "apples and strawberries are @nice and @nice are green red lines" => [
+    ['apples',       [ColourWheel::FG[:green], ColourWheel::BG[:red]], true],
+    ['strawberries', [ColourWheel::FG[:green], ColourWheel::BG[:red]], true],
+  ],
+  
+  # an indirect substitution
+  "apples and strawberries are @nice and @nice are @cool and @cool are green red lines" => [
+    ['apples',       [ColourWheel::FG[:green], ColourWheel::BG[:red]], true],
+    ['strawberries', [ColourWheel::FG[:green], ColourWheel::BG[:red]], true],
+  ],
+  
+  # even more indirect
+  "apples and strawberries are @nice and @nice are @cool and @cool are @awesome and @awesome are green red lines" => [
+    ['apples',       [ColourWheel::FG[:green], ColourWheel::BG[:red]], true],
+    ['strawberries', [ColourWheel::FG[:green], ColourWheel::BG[:red]], true],
+  ],
 }
 
 end
