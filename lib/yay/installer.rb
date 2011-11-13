@@ -1,9 +1,8 @@
 
 class Yay
   class Installer
-    def initialize(url, globally)
+    def initialize(url)
         @url = url
-        @globally = globally
     end
     
     def install

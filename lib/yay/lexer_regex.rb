@@ -18,7 +18,6 @@ class Yay
       # keywords
       [:line           , /\bline[s]?\b/i],
       [:install        , /\binstall\b/i],
-      [:local          , /\blocal(ly)?\b/i],
       [:include        , /\b(include|use|load)\b/i],
       [:and            , /(\b(and|but)\b)|,/i],
       [:verb           , /\b(is|are|a|an)\b/],

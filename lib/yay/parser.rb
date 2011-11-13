@@ -15,12 +15,13 @@ class Yay
     end
 
     # attempt to 
-    def install_file url, globally
-      installer = Yay::Installer.new url, globally
+    def install_file url
+      installer = Yay::Installer.new url
       installer.install
     end
     
     def handle_string string
+      string = Regexp::escape(string)
       Regexp.new(string, Regexp::IGNORECASE)
     end
 

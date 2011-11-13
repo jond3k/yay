@@ -5,8 +5,7 @@ rule
 
   body: command_list                      {  }
       | literal                           { load_file val[0] }
-      | install literal                   { install_file val[1], true }
-      | install local literal             { install_file val[2], false }
+      | install literal                   { install_file val[1] }
       |
 
   command_list: command and_opt command_list      {  }
