@@ -14,10 +14,13 @@ class Yay
       @ruleset.merge loader.get_rules
     end
 
-    # attempt to 
     def install_file url
       installer = Yay::Installer.new url
       installer.install
+    end
+    
+    def print_installed
+      # TODO
     end
     
     def handle_string string

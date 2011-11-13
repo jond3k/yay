@@ -6,6 +6,7 @@ rule
   body: command_list                      {  }
       | literal                           { load_file val[0] }
       | install literal                   { install_file val[1] }
+      | installed                         { print_installed }
       |
 
   command_list: command and_opt command_list      {  }

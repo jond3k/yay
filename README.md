@@ -1,34 +1,46 @@
-yay does things like
+yay
+====
 
-echo "i have some cheese" | yay cheese is yellow
-echo "i want to see [error], [warning] and [info] differently!" | yay error warning are red and info is green
+yay adds colour to your log files so you can spot things you're looking for easily  
 
-it colours log files and data streams so you can more easily spot important information and patterns
+    $ echo "i have some cheese" | yay cheese is yellow  
 
-if the syntax in the first two examples seemed a bit too wordy, words like "and", "a", "are" and "is" are completely optional. 
+    $ echo "i want to see error, warning and info differently" | ./yay error is red, warning is yellow and info is green  
 
-echo "[error] [warning] [info]" | yay error warning red info green
+> i want to see error, warning and info differently  
 
-in fact, each word can be a PCRE regular expression
+features
+----
 
-echo "[error] [warning] [info]" | yay "error|warning" red info green
+* a simple language for creating rules  
+* regexps can be used to match things like dates  
+* complex rules can be stored in .yay files  
+* yay files can be shared using *github gists*  
 
-install it and try it out!
+more
+----
 
-tail -f /var/log/nginx/error.log | yay
+if the syntax in the earlier examples seemed a bit too wordy, words like "and", "a", "are" and "is" are completely optional.  
 
-the default configuration works well for log4x and syslog outputs
+    $ echo "[error] [warning] [info]" | yay error warning red info green  
 
-you can load rules from .yay files, some of which are 
+in fact, each word can be a Ruby regular expression  
 
-tail -f /var/log/messages | yay syslog
+    $ echo "[error] [warning] [info]" | yay "(error|warning)" red, info green  
 
-you can filter out any messages that aren't coloured in
+coming soon
+----
 
-tail -f /var/log/nginx/error.log | yay syslog hide others
+the default configuration works well for log4x and syslog outputs  
 
-you can write simple rules that are passed in through the commandline or you can create more complex ones by writing .yay files
+    $ tail /var/log/nginx/error.log | yay  
 
+you can load rules from .yay files, some of which are included  
 
+    $ yay installed  
 
+you can download and install rules from gists  
 
+    $ yay install https://gist.github.com/1361474
+
+have fun! :D  
