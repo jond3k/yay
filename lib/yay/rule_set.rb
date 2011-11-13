@@ -1,6 +1,6 @@
 
 class Yay
-  # manages colour rules
+  # manages colour rules. including variable substitutions
   class RuleSet
     
     def initialize
@@ -18,8 +18,8 @@ class Yay
     end
     
     # merge with another ruleset
-    def merge ruleset
-      @rules = @rules | ruleset.get_rules
+    def merge rules
+      @rules = @rules | rules
     end
     
     def get_rules
@@ -34,22 +34,10 @@ class Yay
         @rules.push [string, colours, is_line]
       }
     end
-    
-    def unresolved_substitution_error variable
-      raise "No rule for #{variable}"
-    end
-    
-    def circular_reference_error path
-      raise "Circular reference: #{path}"
-    end
-    
-    def already_substituted_warning variable
-      raise "Variable #{variable} has already been assigned"
-    end
 
     # add a VARIABLE = COLOUR match rule so we can substitute variables later
     def add_substitution variable, colours, is_line
-      already_substituted_warning variable if @var_to_colours[variable] || @var_to_var[variable]
+      raise AlreadyAssignedError.new variable if @var_to_colours[variable] || @var_to_var[variable]
       @var_to_colours[variable] = [colours, is_line]
     end
 
@@ -74,8 +62,9 @@ class Yay
 
       while true 
         # detect circular references
-        circular_reference_error(path) unless path.index(current).nil?
-        path.unshift current
+        raise CircularReferenceError.new(current, path) unless path.index(current).nil?
+
+        path.push current
         
         # see if this variable has a value
         result  = @var_to_colours[current]
@@ -86,8 +75,8 @@ class Yay
         break if current.nil?
       end
       
-      unresolved_substitution_error variable unless result
-      result
+      raise UnresolvedSubstitutionError.new variable unless result
+      return result
     end
     
     def substitute_variables

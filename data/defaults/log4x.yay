@@ -1,15 +1,18 @@
 #!/usr/bin/yay
 # Highlights log4j style messages
 
-insensitive
-
-debug and trace are normal
-normal is gray
-warning is yellow
-error is red
-fatal is a red line
+debug and trace are @boring
+"normal" and info are @normal
+warning is @interesting
+error is @serious
+fatal is @serious
 
 # some words that aren't logger levels but are still important
-exception is red
-"unhandled exception" is a red line
-important is red
+exception is @serious
+"unhandled exception" is @serious
+important is @serious
+
+@boring are dim lines
+@normal is normal
+@interesting is yellow
+@serious is an inverted red line

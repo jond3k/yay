@@ -4,14 +4,10 @@ require 'yay/colour_wheel'
 require 'yay/rule_set'
 require 'yay/loader'
 require 'yay/installer'
+require 'yay/errors'
 
 class Yay
   class Parser < Yay::ParserGen   
-
-    def lexer= lexer
-      @lexer = lexer
-    end
-
     def load_file filename
       loader = Yay::Loader.new filename
       loader.load
@@ -50,7 +46,7 @@ class Yay
           bg = ColourWheel::BG[colour]
           result.push bg
         else
-          raise "Too many colours: #{colour} (fg: #{fg}, bg: #{bg})"
+          raise Yay::TooManyColoursError.new fg, bg, colour, [@lexer.position, @lexer.line]
         end
       }
       result
@@ -81,5 +77,9 @@ class Yay
       @lexer.next_token
     end
 
+    def on_error error_token_id, error_value, value_stack
+      type = token_to_str error_token_id
+      raise Yay::UnexpectedTokenError.new type, error_value, [@lexer.position, @lexer.line]
+    end
   end
 end

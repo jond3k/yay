@@ -5,6 +5,9 @@ class Yay
   class Lexer
     
     def initialize(string="")
+      @position = 0
+      @line     = 1
+      
       # default to an empty string scanner. this provides us an endless number
       # of eofs
       use_string(string)
@@ -14,7 +17,15 @@ class Yay
     def use_string(string)
       @scanner = StringScanner.new string
     end
-       
+    
+    def position
+      @position
+    end
+    
+    def line
+      @line
+    end
+    
     # get the next token in the file
     def next_token
       return nil if @scanner.empty?
@@ -26,6 +37,7 @@ class Yay
           next unless value
           return next_token if type == :whitespace
           return next_token if type == :comment
+          @position += 1
           return normalize_token type, value
         }
       end

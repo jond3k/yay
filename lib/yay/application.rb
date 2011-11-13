@@ -26,13 +26,16 @@ class Yay
       
       return if @args == DO_NOTHING_ARGS
       
-      @parser = Yay::Parser.new
-      @parser.parse_array(@args)
-      @rules = @parser.get_rules
+      begin      
       
-      begin
+        @parser = Yay::Parser.new
+        @parser.parse_array(@args)
+        @rules = @parser.get_rules
+
         @colourizer = Yay::Colourizer.new @rules, @input, @output
         @colourizer.colourize_pipe
+      rescue Yay::Error => error
+        @error.puts error.printable_message
       rescue Interrupt
       end
     end
