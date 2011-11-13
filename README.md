@@ -12,19 +12,29 @@ features
 
 * a simple language for creating rules  
 * regexps can be used to match things like dates  
-* complex rules can be stored in .yay files  
-* yay files can be shared using *github gists*  
+* more complex, multilined rules can be stored in .yay files  
+* yay files can be shared using gists!  
 
 more
 ----
 
-if the syntax in the earlier examples seemed a bit too wordy, words like "and", "a", "are" and "is" are completely optional.  
+the syntax is designed to be easy to use but if the other examples seemed a bit too wordy, words like "and", "a", "are" and "is" are completely optional  
 
+    $ echo "[error] [warning] [info]" | yay error and warning are red and info is green  
     $ echo "[error] [warning] [info]" | yay error warning red info green  
 
-in fact, the words you match with are actually regular expressions  
+you can set both foreground and background colours and use all the VT100 commands  
 
-    $ echo "[error] [warning] [info]" | yay "(error|warning)" red, info green  
+    $ echo "this is a match" | yay match is a dim blue red  
+
+if you want to make something really stand out, you can colour an entire line  
+
+    $ echo "this line is matched" | yay matched are red yellow lines  
+
+you can treat matching words line regular expressions  
+
+    $ echo "[error] something bad" | yay "(error|warning)" red  
+    $ echo "[ERROR] something bad" | yay "/error/i" red  
 
 the default configuration works well for log4x and syslog outputs  
 
