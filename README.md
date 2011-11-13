@@ -7,8 +7,6 @@ yay adds colour to your log files so you can spot things you're looking for easi
 
     $ echo "i want to see error, warning and info differently" | ./yay error is red, warning is yellow and info is green  
 
-> i want to see error, warning and info differently  
-
 features
 ----
 
@@ -24,12 +22,9 @@ if the syntax in the earlier examples seemed a bit too wordy, words like "and", 
 
     $ echo "[error] [warning] [info]" | yay error warning red info green  
 
-in fact, each word can be a Ruby regular expression  
+in fact, the words you match with are actually regular expressions  
 
     $ echo "[error] [warning] [info]" | yay "(error|warning)" red, info green  
-
-coming soon
-----
 
 the default configuration works well for log4x and syslog outputs  
 
@@ -39,7 +34,7 @@ you can load rules from .yay files, some of which are included
 
     $ yay installed  
 
-you can download and install rules from gists  
+you can download and install yay files from anywhere, including github gists  
 
     $ yay install https://gist.github.com/1361474
 
