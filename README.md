@@ -4,15 +4,14 @@ yay
 yay adds colour to your log files so you can spot things you're looking for easily  
 
     $ echo "i have some cheese" | yay cheese is yellow  
-
-    $ echo "i want to see error, warning and info differently" | ./yay error is red, warning is yellow and info is green  
+    $ echo "i want to see errors, warnings and info differently" | yay errors are red, warnings are yellow and info is green  
 
 features
 ----
 
 * a simple language for creating rules  
 * regexps can be used to match things like dates  
-* more complex, multilined rules can be stored in .yay files  
+* complex, multi-lined rules can be stored in .yay files  
 * yay files can be shared using gists!  
 
 more
@@ -29,9 +28,9 @@ you can set both foreground and background colours and use all the VT100 command
 
 if you want to make something really stand out, you can colour an entire line  
 
-    $ echo "this line is matched" | yay matched are red yellow lines  
+    $ echo "this line has matches" | yay matches are red yellow lines  
 
-you can treat matching words line regular expressions  
+you can treat matching words like regular expressions  
 
     $ echo "[error] something bad" | yay "(error|warning)" red  
     $ echo "[ERROR] something bad" | yay "/error/i" red  
