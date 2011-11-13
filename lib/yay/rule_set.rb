@@ -99,11 +99,5 @@ class Yay
       }
       @string_to_var = []
     end
-    
-    def get_regexps
-      get_rules.each { |rule| 
-        
-      }
-    end
   end
 end

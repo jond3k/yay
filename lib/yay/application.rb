@@ -1,4 +1,5 @@
 require 'yay/parser'
+require 'yay/colourizer'
 
 class Yay
   class Application
@@ -28,14 +29,13 @@ class Yay
       @parser = Yay::Parser.new
       @parser.parse_array(@args)
       @rules = @parser.get_rules
+      
+      begin
+        @colourizer = Yay::Colourizer.new @rules, @input, @output
+        @colourizer.colourize_pipe
+      rescue Interrupt
+      end
+    end
 
-      handle_stream
-    end
-    
-    def handle_stream
-      
-      
-      
-    end
   end
 end

@@ -21,7 +21,7 @@ class Yay
       [:local          , /\blocal(ly)?\b/i],
       [:include        , /\b(include|use|load)\b/i],
       [:and            , /(\b(and|but)\b)|,/i],
-      [:verb           , /\b(is|are|a)\b/],
+      [:verb           , /\b(is|are|a|an)\b/],
 
       # everything else matched must be a plain old term
       [:literal        , /\b\S+\b/],

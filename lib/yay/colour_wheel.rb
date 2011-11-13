@@ -47,11 +47,11 @@ class Yay
       MISC.keys | FG.keys
     end
 
-    def begin_colour(colours)
+    def self.begin_colours(colours)
       "\033[#{colours.join(';')}m"
     end
 
-    def end_colour()
+    def self.end_colour()
       "\033[0m"
     end
   end
