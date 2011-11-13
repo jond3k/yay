@@ -15,92 +15,101 @@ class ParserGen < Racc::Parser
 
 racc_reduce_table = [
  0, 0, :racc_error,
- 1, 11, :_reduce_none,
- 0, 11, :_reduce_none,
- 3, 12, :_reduce_none,
- 1, 12, :_reduce_none,
  1, 13, :_reduce_none,
- 1, 13, :_reduce_none,
- 1, 13, :_reduce_none,
- 1, 13, :_reduce_none,
- 1, 13, :_reduce_none,
- 4, 15, :_reduce_10,
- 3, 16, :_reduce_11,
- 4, 17, :_reduce_12,
- 3, 18, :_reduce_13,
- 2, 19, :_reduce_14,
- 3, 20, :_reduce_15,
- 1, 20, :_reduce_16,
- 1, 24, :_reduce_17,
- 1, 24, :_reduce_18,
- 2, 22, :_reduce_19,
- 1, 22, :_reduce_20,
- 1, 14, :_reduce_21,
- 0, 14, :_reduce_none,
- 1, 23, :_reduce_23,
- 0, 23, :_reduce_24,
- 2, 21, :_reduce_25,
- 0, 21, :_reduce_none ]
+ 1, 13, :_reduce_2,
+ 2, 13, :_reduce_3,
+ 3, 13, :_reduce_4,
+ 0, 13, :_reduce_none,
+ 3, 14, :_reduce_none,
+ 1, 14, :_reduce_none,
+ 1, 15, :_reduce_none,
+ 1, 15, :_reduce_none,
+ 1, 15, :_reduce_none,
+ 1, 15, :_reduce_none,
+ 1, 15, :_reduce_none,
+ 4, 17, :_reduce_13,
+ 3, 18, :_reduce_14,
+ 4, 19, :_reduce_15,
+ 3, 20, :_reduce_16,
+ 2, 21, :_reduce_17,
+ 3, 22, :_reduce_18,
+ 1, 22, :_reduce_19,
+ 1, 26, :_reduce_20,
+ 1, 26, :_reduce_21,
+ 2, 24, :_reduce_22,
+ 1, 24, :_reduce_23,
+ 1, 16, :_reduce_24,
+ 0, 16, :_reduce_none,
+ 1, 25, :_reduce_26,
+ 0, 25, :_reduce_27,
+ 2, 23, :_reduce_28,
+ 0, 23, :_reduce_none ]
 
-racc_reduce_n = 27
+racc_reduce_n = 30
 
-racc_shift_n = 36
+racc_shift_n = 41
 
 racc_action_table = [
-    -4,    31,    27,     7,     9,    28,    28,    17,     4,     6,
-     7,     9,   -22,   -22,    23,    17,     4,     6,     7,     9,
-    18,    18,    21,    18,    15,    33,    28,    33 ]
+    -7,   -25,    33,    19,    16,    20,   -25,    11,    22,    22,
+    33,    25,    16,     8,     9,    11,     2,     4,    30,     8,
+     9,    11,    36,    28,    31,    29,    29,    18,    -2,    16,
+    38,    29,    38 ]
 
 racc_action_check = [
-     5,    22,    19,    16,    16,    22,    19,     5,    20,    20,
-    20,    20,     3,     3,    15,     3,     0,     0,     0,     0,
-    14,    18,     6,     4,     1,    26,    28,    30 ]
+     7,     6,    21,     4,    16,     4,     6,    21,     6,     7,
+    23,     9,     8,    23,    23,    23,     0,     0,    18,     0,
+     0,     0,    24,    17,    20,    24,    17,     3,     2,     1,
+    27,    29,    35 ]
 
 racc_action_pointer = [
-    14,    24,   nil,     8,    14,     0,    18,   nil,   nil,   nil,
-   nil,   nil,   nil,   nil,    11,    14,    -1,   nil,    12,     0,
-     6,   nil,    -1,   nil,   nil,   nil,    17,   nil,    20,   nil,
-    19,   nil,   nil,   nil,   nil,   nil ]
+    14,    18,    28,    27,     1,   nil,    -1,     0,     1,     9,
+   nil,   nil,   nil,   nil,   nil,   nil,    -7,    18,    18,   nil,
+    22,     0,   nil,     8,    17,   nil,   nil,    20,   nil,    23,
+   nil,   nil,   nil,   nil,   nil,    22,   nil,   nil,   nil,   nil,
+   nil ]
 
 racc_action_default = [
-    -2,   -27,    -1,   -16,   -26,   -22,   -27,   -17,    -5,   -18,
-    -6,    -7,    -8,    -9,   -26,   -27,   -27,   -21,   -26,   -27,
-   -27,   -14,   -27,    36,   -15,   -25,   -24,   -13,   -20,    -3,
-   -24,   -11,   -12,   -23,   -19,   -10 ]
+    -5,   -29,   -20,   -30,   -30,    -1,   -19,   -25,   -29,   -30,
+    -8,   -21,    -9,   -10,   -11,   -12,   -29,   -30,   -30,    -3,
+   -30,   -30,   -24,   -30,   -30,   -17,   -28,   -27,   -14,   -23,
+    41,    -4,   -18,   -20,    -6,   -27,   -16,   -13,   -26,   -22,
+   -15 ]
 
 racc_goto_table = [
-     2,    19,    24,    26,    32,    16,    30,    20,    35,     1,
-   nil,    22,    34,   nil,   nil,    25,   nil,   nil,   nil,   nil,
-    29 ]
+     5,    17,    27,    37,    21,    23,    32,     3,    24,    35,
+   nil,    40,   nil,   nil,    39,   nil,    26,   nil,   nil,   nil,
+   nil,   nil,   nil,    34 ]
 
 racc_goto_check = [
-     2,    11,    10,    12,    13,     4,    12,     4,    13,     1,
-   nil,    11,    12,   nil,   nil,    11,   nil,   nil,   nil,   nil,
-     2 ]
+     2,    11,    12,    13,     4,     4,    10,     1,    11,    12,
+   nil,    13,   nil,   nil,    12,   nil,    11,   nil,   nil,   nil,
+   nil,   nil,   nil,     2 ]
 
 racc_goto_pointer = [
-   nil,     9,     0,   nil,     2,   nil,   nil,   nil,   nil,   nil,
-   -14,    -3,   -16,   -22,   nil ]
+   nil,     7,     0,   nil,    -2,   nil,   nil,   nil,   nil,   nil,
+   -15,     0,   -15,   -24,   nil ]
 
 racc_goto_default = [
-   nil,   nil,   nil,     5,   nil,     8,    10,    11,    12,    13,
-    14,   nil,   nil,   nil,     3 ]
+   nil,   nil,   nil,     7,   nil,    10,    12,    13,    14,    15,
+     1,   nil,   nil,   nil,     6 ]
 
 racc_token_table = {
  false => 0,
  Object.new => 1,
- :variable => 2,
- :include => 3,
- :literal => 4,
- :regex => 5,
- :colour => 6,
- :and => 7,
- :line => 8,
- :verb => 9 }
+ :literal => 2,
+ :install => 3,
+ :local => 4,
+ :variable => 5,
+ :include => 6,
+ :regex => 7,
+ :colour => 8,
+ :and => 9,
+ :line => 10,
+ :verb => 11 }
 
 racc_use_result_var = true
 
-racc_nt_base = 10
+racc_nt_base = 12
 
 Racc_arg = [
  racc_action_table,
@@ -121,9 +130,11 @@ Racc_arg = [
 Racc_token_to_s_table = [
 '$end',
 'error',
+'literal',
+'install',
+'local',
 'variable',
 'include',
-'literal',
 'regex',
 'colour',
 'and',
@@ -153,11 +164,26 @@ Racc_debug_parser = false
 
  # reduce 1 omitted
 
- # reduce 2 omitted
+module_eval <<'.,.,', 'scripts/../data/grammar.y', 6
+  def _reduce_2( val, _values, result )
+ load_file val[0]
+   result
+  end
+.,.,
 
- # reduce 3 omitted
+module_eval <<'.,.,', 'scripts/../data/grammar.y', 7
+  def _reduce_3( val, _values, result )
+ install_file val[1], true
+   result
+  end
+.,.,
 
- # reduce 4 omitted
+module_eval <<'.,.,', 'scripts/../data/grammar.y', 8
+  def _reduce_4( val, _values, result )
+ install_file val[2], false
+   result
+  end
+.,.,
 
  # reduce 5 omitted
 
@@ -169,114 +195,120 @@ Racc_debug_parser = false
 
  # reduce 9 omitted
 
-module_eval <<'.,.,', 'scripts/../data/grammar.y', 17
-  def _reduce_10( val, _values, result )
- add_match val[0], handle_colours(val[2]), val[3]
-   result
-  end
-.,.,
+ # reduce 10 omitted
 
-module_eval <<'.,.,', 'scripts/../data/grammar.y', 19
-  def _reduce_11( val, _values, result )
- add_assignment val[0], val[2]
-   result
-  end
-.,.,
+ # reduce 11 omitted
 
-module_eval <<'.,.,', 'scripts/../data/grammar.y', 21
-  def _reduce_12( val, _values, result )
- add_substitution val[0], handle_colours(val[2]), val[3]
-   result
-  end
-.,.,
+ # reduce 12 omitted
 
-module_eval <<'.,.,', 'scripts/../data/grammar.y', 23
+module_eval <<'.,.,', 'scripts/../data/grammar.y', 20
   def _reduce_13( val, _values, result )
- add_equivalence val[0], val[2]
+ @ruleset.add_match val[0], handle_colours(val[2]), val[3]
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'scripts/../data/grammar.y', 25
+module_eval <<'.,.,', 'scripts/../data/grammar.y', 22
   def _reduce_14( val, _values, result )
- load_file val[0]
+ @ruleset.add_assignment val[0], val[2]
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'scripts/../data/grammar.y', 27
+module_eval <<'.,.,', 'scripts/../data/grammar.y', 24
   def _reduce_15( val, _values, result )
- val[2].unshift(val[0]); result = val[2]
+ @ruleset.add_substitution val[0], handle_colours(val[2]), val[3]
+   result
+  end
+.,.,
+
+module_eval <<'.,.,', 'scripts/../data/grammar.y', 26
+  def _reduce_16( val, _values, result )
+ @ruleset.add_equivalence val[0], val[2]
    result
   end
 .,.,
 
 module_eval <<'.,.,', 'scripts/../data/grammar.y', 28
-  def _reduce_16( val, _values, result )
- result = [val[0]]
+  def _reduce_17( val, _values, result )
+ load_file val[0]
    result
   end
 .,.,
 
 module_eval <<'.,.,', 'scripts/../data/grammar.y', 30
-  def _reduce_17( val, _values, result )
- result = handle_string(val[0])
+  def _reduce_18( val, _values, result )
+ val[2].unshift(val[0]); result = val[2]
    result
   end
 .,.,
 
 module_eval <<'.,.,', 'scripts/../data/grammar.y', 31
-  def _reduce_18( val, _values, result )
- result = handle_regex(val[0])
+  def _reduce_19( val, _values, result )
+ result = [val[0]]
    result
   end
 .,.,
 
 module_eval <<'.,.,', 'scripts/../data/grammar.y', 33
-  def _reduce_19( val, _values, result )
- val[1].unshift(val[0].to_sym); result = val[1]
+  def _reduce_20( val, _values, result )
+ result = handle_string(val[0])
    result
   end
 .,.,
 
 module_eval <<'.,.,', 'scripts/../data/grammar.y', 34
-  def _reduce_20( val, _values, result )
- result = [val[0].to_sym]
+  def _reduce_21( val, _values, result )
+ result = handle_regex(val[0])
    result
   end
 .,.,
 
 module_eval <<'.,.,', 'scripts/../data/grammar.y', 36
-  def _reduce_21( val, _values, result )
+  def _reduce_22( val, _values, result )
+ val[1].unshift(val[0].to_sym); result = val[1]
+   result
+  end
+.,.,
+
+module_eval <<'.,.,', 'scripts/../data/grammar.y', 37
+  def _reduce_23( val, _values, result )
+ result = [val[0].to_sym]
+   result
+  end
+.,.,
+
+module_eval <<'.,.,', 'scripts/../data/grammar.y', 39
+  def _reduce_24( val, _values, result )
  result = nil
    result
   end
 .,.,
 
- # reduce 22 omitted
+ # reduce 25 omitted
 
-module_eval <<'.,.,', 'scripts/../data/grammar.y', 39
-  def _reduce_23( val, _values, result )
+module_eval <<'.,.,', 'scripts/../data/grammar.y', 42
+  def _reduce_26( val, _values, result )
  result = true
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'scripts/../data/grammar.y', 40
-  def _reduce_24( val, _values, result )
+module_eval <<'.,.,', 'scripts/../data/grammar.y', 43
+  def _reduce_27( val, _values, result )
  result = false
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'scripts/../data/grammar.y', 42
-  def _reduce_25( val, _values, result )
+module_eval <<'.,.,', 'scripts/../data/grammar.y', 45
+  def _reduce_28( val, _values, result )
  result = nil
    result
   end
 .,.,
 
- # reduce 26 omitted
+ # reduce 29 omitted
 
  def _reduce_none( val, _values, result )
   result

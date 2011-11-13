@@ -4,7 +4,10 @@ class ParserGen
 rule
 
   body: command_list                      {  }
-      | 
+      | literal                           { load_file val[0] }
+      | install literal                   { install_file val[1], true }
+      | install local literal             { install_file val[2], false }
+      |
 
   command_list: command and_opt command_list      {  }
               | command                           {  }
@@ -15,13 +18,13 @@ rule
          | equivalence
          | include_file
 
-  match:  string_list verbs_opt colour_list line_opt { add_match val[0], handle_colours(val[2]), val[3] }
+  match:  string_list verbs_opt colour_list line_opt { @ruleset.add_match val[0], handle_colours(val[2]), val[3] }
 
-  assignment: string_list verbs_opt variable { add_assignment val[0], val[2] }
+  assignment: string_list verbs_opt variable { @ruleset.add_assignment val[0], val[2] }
 
-  substitution: variable verbs_opt colour_list line_opt { add_substitution val[0], handle_colours(val[2]), val[3] }
+  substitution: variable verbs_opt colour_list line_opt { @ruleset.add_substitution val[0], handle_colours(val[2]), val[3] }
 
-  equivalence: variable verbs_opt variable   { add_equivalence val[0], val[2]  }
+  equivalence: variable verbs_opt variable   { @ruleset.add_equivalence val[0], val[2]  }
 
   include_file: include literal           { load_file val[0] }
 

@@ -42,29 +42,17 @@ class Yay
       :white   => 47
     };
 
-    def self.get_misc colour
-      return MISC[colour]
-    end
-    
-    def self.get_fg colour
-      return FG[colour]
-    end
-    
-    def self.get_bg colour
-      return BG[colour]
-    end
-
     def self.all_names
       # assume BG and FG have the same keys
       MISC.keys | FG.keys
     end
 
-    def get_start(num)
-      "\033[#{a}m"
+    def begin_colour(colours)
+      "\033[#{colours.join(';')}m"
     end
 
-    def get_end()
-
+    def end_colour()
+      "\033[0m"
     end
   end
 end

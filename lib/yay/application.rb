@@ -3,10 +3,8 @@ require 'yay/parser'
 class Yay
   class Application
 
-    # args that can be used if you don't want to application to do anything
+    # args that can be used if you don't want the application to do anything
     DO_NOTHING_ARGS = ['--do-nothing']
-    # args that can be used if you only want to load commands
-    ONLY_LOAD_ARGS = ['--only-load']
 
     def initialize(input, output, error, args)
       raise ArgumentError, "input" unless input.kind_of? IO
@@ -27,12 +25,17 @@ class Yay
       
       return if @args == DO_NOTHING_ARGS
       
-      @engine = Yay::Parser.new
-      @engine.parse_args(@args)
+      @parser = Yay::Parser.new
+      @parser.parse_array(@args)
+      @rules = @parser.get_rules
 
-      return if @args == ONLY_LOAD_ARGS
+      handle_stream
+    end
+    
+    def handle_stream
       
-      @engine.handle_stream(@input, @output)
+      
+      
     end
   end
 end
