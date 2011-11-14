@@ -1,0 +1,6 @@
+require 'test/unit'
+require 'yay/application_test'
+require 'yay/installer_test'
+require 'yay/lexer_test'
+require 'yay/loader_test'
+require 'yay/parser_test'
