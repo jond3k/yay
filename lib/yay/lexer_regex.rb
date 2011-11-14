@@ -3,8 +3,8 @@ require 'yay/colour_wheel'
 class Yay
   class Lexer
     
-    # The expressions to match to find tokens
-    # Ensure the labels match up to tokens in grammar.y
+    # the expressions to match to find tokens
+    # ensure the labels match up to tokens in grammar.y
     BASE_PATTERNS = [
       [:whitespace     , /\s+/],
       [:comment        , /#.*$/],
@@ -12,7 +12,7 @@ class Yay
       # strings
       [:double_quoted  , /"[^"\\]*(?:\\.[^"\\]*)*"/],
       [:single_quoted  , /'[^'\\]*(?:\\.[^'\\]*)*'/],
-      [:regex          , /\/[^\/\\\r\n]*(?:\\.[^\/\\\r\n]*)*\/(?:[a-z]\b)*/],
+      [:regex          , /\/[^\/\\\r\n]*(?:\\.[^\/\\\r\n]*)*\/(?:[a-z]*\b)?/],
       [:variable       , /@\w+/],
 
       # keywords

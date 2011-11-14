@@ -7,6 +7,14 @@ class Yay
       @input   = input
       @output  = output
     end
+    
+    def line_rules
+      @line_rules
+    end
+    
+    def part_rules
+      @part_rules
+    end
 
     def colourize_rules rules
       @line_rules = []

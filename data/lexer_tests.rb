@@ -90,6 +90,11 @@ LEXER_TESTS = {
     [:regex, "/abc/i"]
   ],
   
+  # regex with multiple modifiers
+  "/abc/imx" => [
+    [:regex, "/abc/imx"]
+  ],
+  
   # regex with whitespace
   "/abc def/" => [
     [:regex, "/abc def/"]

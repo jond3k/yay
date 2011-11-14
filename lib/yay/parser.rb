@@ -25,13 +25,40 @@ class Yay
     
     def handle_string string
       string = Regexp::escape(string)
-      Regexp.new(string, Regexp::IGNORECASE)
+      return Regexp.new(string, Regexp::IGNORECASE)
     end
 
     def handle_regex string
-      string
+      return string_to_regex string
     end
 
+    # for lack of a better function, this will take the ending sequence from
+    # a regular expression and convert it in to a bytewise options variable
+    def extract_regexp_options args
+      return 0 if args.nil?
+      raise ArgumentError unless args.kind_of? String
+      options_map = {
+        'i' => Regexp::IGNORECASE,
+        'm' => Regexp::MULTILINE,
+        'x' => Regexp::EXTENDED,
+      }
+      options = 0
+      args.each { |char|
+        options |= options_map[char] || 0
+      }
+      return options
+    end
+    
+    # for lack of a better function, this will take a string like "/abc/" and
+    # transform it in to a regex object
+    def string_to_regex string
+      matches = /\/([^\/\\\r\n]*(?:\\.[^\/\\\r\n]*)*)\/([a-z]\b)*/.match string
+      return nil if matches[1].nil?
+      content = Regexp::escape(matches[1])
+      options = extract_regexp_options matches[2]
+      return Regexp.new(content, options)
+    end
+    
     # given an array of colour strings, create an array with the VT100 colour
     # sequences inside
     def handle_colours colours
