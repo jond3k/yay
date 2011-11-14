@@ -12,7 +12,7 @@ class Yay
       # strings
       [:double_quoted  , /"[^"\\]*(?:\\.[^"\\]*)*"/],
       [:single_quoted  , /'[^'\\]*(?:\\.[^'\\]*)*'/],
-      [:regex          , /\/[^\/\\\r\n]*(?:x.[^\/x\r\n]*)*\/[a-z]*/],  
+      [:regex          , /\/[^\/\\\r\n]*(?:\\.[^\/\\\r\n]*)*\/(?:[a-z]\b)*/],
       [:variable       , /@\w+/],
 
       # keywords

@@ -94,18 +94,16 @@ LEXER_TESTS = {
   "/abc def/" => [
     [:regex, "/abc def/"]
   ],
-  
-  # FIXME
+
   # regex with escaping
-  #"/abc\/def/" => [
-  #  [:regex, "/abc\/def/"]
-  #],
-  
-  # FIXME
+  "/abc\\/def/" => [
+    [:regex, "/abc\\/def/"]
+  ],
+
   # regex withescaping and modifier
-  #"/abc\/def/i" => [
-  #  [:regex, "/abc\/def/i"]
-  #],
+  "/abc\\/def/i" => [
+    [:regex, "/abc\\/def/i"]
+  ],
 
   # regex noninterference
   "/abc/ 123" => [
@@ -126,16 +124,15 @@ LEXER_TESTS = {
     [:literal, "123"],
     [:regex, "/def/"],
   ],
-  
-  # FIXME
+
   # regex with modifier, regex with escaping noninterference
-  #"/abc/i 123 /def/ /abc\/def/ efg" => [
-  #  [:regex,   "/abc/i"],
-  #  [:literal, "123"],
-  #  [:regex,   "/def/"],
-  #  [:regex,   "/abc\/def/"],
-  #  [:literal, "efg"],
-  #], 
+  "/abc/i 123 /def/ /abc\\/def/ efg" => [
+    [:regex,   "/abc/i"],
+    [:literal, "123"],
+    [:regex,   "/def/"],
+    [:regex,   "/abc\\/def/"],
+    [:literal, "efg"],
+  ], 
   
   # quoted regex
   "\"/abc/i\"" => [
