@@ -1,8 +1,6 @@
 #!/usr/bin/yay
 # Highlights syslog messages
 
-insensitive
-
 debug is normal
 informational is gray
 notice and warning are yellow

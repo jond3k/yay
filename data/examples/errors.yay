@@ -1,6 +1,0 @@
-#!/usr/bin/yay
-# Will pipe some lines to stderr
-
-warn is an error
-error and fatal are errors
-

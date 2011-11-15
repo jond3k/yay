@@ -1,14 +1,18 @@
 require 'yay/parser'
 require 'yay/colourizer'
+require 'yay/version'
 
 class Yay
   class Application
 
-    # args that can be used if you don't want the application to do anything
+    # arg that can be used if you don't want the application to do anything
     DO_NOTHING_ARG = '--do-nothing'
     
-    # args that can be used if you want to dump the rules instead of using them
+    # arg that can be used if you want to dump the rules instead of using them
     DUMP_RULES_ARG = '--dump'
+    
+    # arg that can be used to dump the version and exit
+    SHOW_VERSION_ARG = '--version'
 
     def initialize(input, output, error, args)
       raise ArgumentError, "input" unless input.kind_of? IO
@@ -28,7 +32,14 @@ class Yay
       @running = true
       
       preArg = @args[0]
-      @args.shift if preArg == DO_NOTHING_ARG || preArg == DUMP_RULES_ARG
+      @args.shift if preArg == DO_NOTHING_ARG || 
+                     preArg == DUMP_RULES_ARG ||
+                     preArg == SHOW_VERSION_ARG
+      
+      if preArg == SHOW_VERSION_ARG
+        puts Yay::version
+        exit
+      end
       
       return if preArg == DO_NOTHING_ARG
       

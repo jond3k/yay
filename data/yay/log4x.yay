@@ -8,7 +8,7 @@ error is @serious
 fatal is @serious
 
 # some words that aren't logger levels but are still important
-exception is @serious
+exception is @interesting
 "unhandled exception" is @serious
 important is @serious
 
