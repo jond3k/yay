@@ -5,6 +5,10 @@ class Yay
     def initialize filename
       @filename = filename
     end
+		
+		def self.default_file_loader
+			return Yay::Loader.new Yay::Paths::DEFAULT_YAYFILE
+		end
     
     # invoking a new parser and process a string of yay commands
     # any variables inside the parser context will not affect our own

@@ -7,7 +7,7 @@ rule
       | literal                           { load_file val[0] }
       | install literal                   { install_file val[1] }
       | list_installed                    { print_installed }
-      |
+      |									  { load_default_file }
 
   command_list: command and_opt command_list      {  }
               | command                           {  }

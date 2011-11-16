@@ -5,23 +5,49 @@ require 'yay/rule_set'
 require 'yay/loader'
 require 'yay/installer'
 require 'yay/errors'
+require 'yay/paths'
 
 class Yay
   class Parser < Yay::ParserGen   
+		attr :allow_default
+		attr :allow_install
+		attr :allow_include
+		attr :allow_print
+		
+		# load a file from a url
     def load_file filename
+			raise ActionDeniedError.new "install (#{url})" unless @allow_include
       loader = Yay::Loader.new filename
       loader.load
       @ruleset.merge loader.get_rules
     end
 
+		# install a file from a url
     def install_file url
+			raise ActionDeniedError.new "install (#{url})" unless @allow_install
       installer = Yay::Installer.new url
       installer.install
     end
     
+		# print the full list of yay files
     def print_installed
+			raise ActionDeniedError.new "install (#{url})" unless @allow_print
       # TODO
     end
+		
+		# allow all parser actions
+		def allow_all=
+			@allow_default = @allow_install = @allow_include = @allow_print = true
+		end
+		
+		# load the default file. used when the commandline is empty
+		def load_default_file
+			# don't throw an error in this case. it's legitimate for a file to be empty
+			return unless @allow_default
+      loader = Yay::Loader.default_file_loader
+      loader.load
+      @ruleset.merge loader.get_rules
+		end
     
     def handle_string string
       string = Regexp::escape(string)

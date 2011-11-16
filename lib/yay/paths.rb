@@ -5,6 +5,8 @@ class Yay
 	
 	# some utility functions for finding the current install and .yay paths
 	class Paths
+		
+		DEFAULT_YAYFILE = 'default'
 
 		# get the paths to installed gems
 		def gempaths

@@ -62,7 +62,7 @@ racc_reduce_table = [
   1, 13, :_reduce_2,
   2, 13, :_reduce_3,
   1, 13, :_reduce_4,
-  0, 13, :_reduce_none,
+  0, 13, :_reduce_5,
   3, 14, :_reduce_6,
   1, 14, :_reduce_7,
   1, 15, :_reduce_none,
@@ -189,7 +189,12 @@ module_eval(<<'.,.,', 'grammar.y', 8)
   end
 .,.,
 
-# reduce 5 omitted
+module_eval(<<'.,.,', 'grammar.y', 9)
+  def _reduce_5(val, _values, result)
+     load_default_file 
+    result
+  end
+.,.,
 
 module_eval(<<'.,.,', 'grammar.y', 11)
   def _reduce_6(val, _values, result)

@@ -46,6 +46,7 @@ class Yay
       begin      
       
         @parser = Yay::Parser.new
+				@parser.allow_all = true
         @parser.parse_array(@args)
         @rules = @parser.get_rules
 
