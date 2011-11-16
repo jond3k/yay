@@ -6,7 +6,7 @@ rule
   body: command_list                      {  }
       | literal                           { load_file val[0] }
       | install literal                   { install_file val[1] }
-      | installed                         { print_installed }
+      | list_installed                    { print_installed }
       |
 
   command_list: command and_opt command_list      {  }
@@ -26,7 +26,7 @@ rule
 
   equivalence: variable verbs_opt variable   { @ruleset.add_equivalence val[0], val[2]  }
 
-  include_file: include literal           { load_file val[0] }
+  include_file: include literal           { load_file val[1] }
 
   string_list: string and_opt string_list { val[2].unshift(val[0]); result = val[2] }
              | string                     { result = [val[0]] }

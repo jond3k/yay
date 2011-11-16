@@ -4,7 +4,12 @@ require 'test/unit'
 require 'yay/loader'
 
 class LoaderTest < Test::Unit::TestCase
-	def test_placeholder
-		
-	end
+
+  # ensure we can instantiate the app
+  def test_new
+    assert(
+      Yay::Loader.new("placeholder")
+    )
+  end
+
 end

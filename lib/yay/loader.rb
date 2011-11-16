@@ -1,3 +1,4 @@
+require 'yay/paths'
 
 class Yay
   class Loader
@@ -8,34 +9,39 @@ class Yay
     # invoking a new parser and process a string of yay commands
     # any variables inside the parser context will not affect our own
     # this is particularly useful when loading files
-    def load_string string
+    def parse_string string
       # invoke a new parser and return the rules it finds
       parser = Yay::Parser.new
       return parser.parse string
     end
-    
-    # 
-    def load_file full_path
+    	
+    # parse a file
+    def parse_file full_path
       file = File.open(full_path, "rb")
       contents = file.read
-      return load_string(contents)
+      return parse_string(contents)
     end
     
-    def resolve_targets filename
-      return [
-        "./#{filename}.yay",
-        "~/.yay/#{filename}.yay",
-#        "#{$GEM_HOME}/yay/#{filename}.yay"
-      ]      
-    end
+		# get the potential target paths
+    def get_potential_resolutions filename
+			paths = Yay::Paths.new
+			dirs  = paths.yay_paths
+			
+			result = []
+			dirs.each { |path| 
+				result.push("#{path}/#{filename}.yay")
+			}
+
+			return result
+		end
     
-    # stat for the file locally and globally
+    # try to determine the location of our file
     def resolve_file filename
-      paths = resolve_targets filename
+      paths = get_potential_resolutions filename
       paths.each { |file_name| 
         begin
           stat = File.stat(file_name)
-          return file_name if stat
+          return file_name if stat.readable?
         rescue Errno::ENOENT 
         end
       }
@@ -45,8 +51,8 @@ class Yay
     # load a file
     def load
       resolved = resolve_file @filename
-      raise Yay::CouldntFindFileError.new @filename, resolve_targets(@filename) unless resolved
-      @rules = load_file resolved
+      raise Yay::CouldntFindFileError.new @filename, get_potential_resolutions(@filename) unless resolved
+      @rules = parse_file resolved
       return @rules
     end
 

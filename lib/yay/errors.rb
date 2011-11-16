@@ -66,7 +66,7 @@ class Yay
     end
     
     def printable_message
-      return "Failed to load file \"#{filename}\"#{printable_position}\nPlaced looked: #{tried.join(', ')}"
+      return "Failed to load file \"#{filename}\"#{printable_position}\nPlaced looked:\n #{tried.join("\n ")}"
     end
   end
   
