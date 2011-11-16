@@ -13,10 +13,19 @@ class Yay
 		attr :allow_install
 		attr :allow_include
 		attr :allow_print
+
+		def initialize context_name=nil
+      @lexer = Yay::Lexer.new
+			@lexer.context_name = context_name
+		end
+
+		def allow_include= value
+			@allow_include = value
+		end
 		
 		# load a file from a url
-    def load_file filename
-			raise ActionDeniedError.new "install (#{url})" unless @allow_include
+    def include_file filename
+			raise NotAllowedError.new "include #{filename}", current_position unless @allow_include
       loader = Yay::Loader.new filename
       loader.load
       @ruleset.merge loader.get_rules
@@ -24,24 +33,24 @@ class Yay
 
 		# install a file from a url
     def install_file url
-			raise ActionDeniedError.new "install (#{url})" unless @allow_install
+			raise NotAllowedError.new "install #{url}", current_position unless @allow_install
       installer = Yay::Installer.new url
       installer.install
     end
     
 		# print the full list of yay files
-    def print_installed
-			raise ActionDeniedError.new "install (#{url})" unless @allow_print
+    def list_installed
+			raise NotAllowedError.new "list installed yay files", current_position unless @allow_print
       # TODO
     end
 		
 		# allow all parser actions
-		def allow_all=
-			@allow_default = @allow_install = @allow_include = @allow_print = true
+		def allow_all= value
+			@allow_default = @allow_install = @allow_include = @allow_print = value
 		end
-		
+
 		# load the default file. used when the commandline is empty
-		def load_default_file
+		def use_default_file
 			# don't throw an error in this case. it's legitimate for a file to be empty
 			return unless @allow_default
       loader = Yay::Loader.default_file_loader
@@ -103,7 +112,7 @@ class Yay
           bg = ColourWheel::BG[colour]
           result.push bg
         else
-          raise Yay::TooManyColoursError.new fg, bg, colour, [@lexer.position, @lexer.line]
+          raise Yay::TooManyColoursError.new fg, bg, colour, current_position
         end
       }
       result
@@ -121,7 +130,6 @@ class Yay
     
     # parse a string
     def parse(str)
-      @lexer = Yay::Lexer.new unless @lexer
       @lexer.use_string(str)
       @ruleset = Yay::RuleSet.new
 
@@ -134,9 +142,13 @@ class Yay
       @lexer.next_token
     end
 
-    def on_error error_token_id, error_value, value_stack
+		def current_position
+			return [@lexer.position, @lexer.line, @lexer.context_name]
+		end
+		
+    def on_error error_token_id, error_value, cant_touch_this
       type = token_to_str error_token_id
-      raise Yay::UnexpectedTokenError.new type, error_value, [@lexer.position, @lexer.line]
+      raise Yay::UnexpectedTokenError.new type, error_value, current_position
     end
   end
 end

@@ -13,9 +13,10 @@ class Yay
     # invoking a new parser and process a string of yay commands
     # any variables inside the parser context will not affect our own
     # this is particularly useful when loading files
-    def parse_string string
+    def parse_string string, context_name
       # invoke a new parser and return the rules it finds
-      parser = Yay::Parser.new
+      parser = Yay::Parser.new context_name
+			parser.allow_include = true
       return parser.parse string
     end
     	
@@ -23,7 +24,7 @@ class Yay
     def parse_file full_path
       file = File.open(full_path, "rb")
       contents = file.read
-      return parse_string(contents)
+      return parse_string contents, full_path
     end
     
 		# get the potential target paths

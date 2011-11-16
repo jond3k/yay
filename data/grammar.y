@@ -4,10 +4,10 @@ class ParserGen
 rule
 
   body: command_list                      {  }
-      | literal                           { load_file val[0] }
+      | literal                           { include_file val[0] }
       | install literal                   { install_file val[1] }
-      | list_installed                    { print_installed }
-      |									  { load_default_file }
+      | list_installed                    { list_installed }
+      |									  { use_default_file }
 
   command_list: command and_opt command_list      {  }
               | command                           {  }
@@ -26,7 +26,7 @@ rule
 
   equivalence: variable verbs_opt variable   { @ruleset.add_equivalence val[0], val[2]  }
 
-  include_file: include literal           { load_file val[1] }
+  include_file: include literal           { include_file val[1] }
 
   string_list: string and_opt string_list { val[2].unshift(val[0]); result = val[2] }
              | string                     { result = [val[0]] }

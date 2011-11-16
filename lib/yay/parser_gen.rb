@@ -170,7 +170,7 @@ module_eval(<<'.,.,', 'grammar.y', 5)
 
 module_eval(<<'.,.,', 'grammar.y', 6)
   def _reduce_2(val, _values, result)
-     load_file val[0] 
+     include_file val[0] 
     result
   end
 .,.,
@@ -184,14 +184,14 @@ module_eval(<<'.,.,', 'grammar.y', 7)
 
 module_eval(<<'.,.,', 'grammar.y', 8)
   def _reduce_4(val, _values, result)
-     print_installed 
+     list_installed 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'grammar.y', 9)
   def _reduce_5(val, _values, result)
-     load_default_file 
+     use_default_file 
     result
   end
 .,.,
@@ -250,7 +250,7 @@ module_eval(<<'.,.,', 'grammar.y', 26)
 
 module_eval(<<'.,.,', 'grammar.y', 28)
   def _reduce_17(val, _values, result)
-     load_file val[1] 
+     include_file val[1] 
     result
   end
 .,.,

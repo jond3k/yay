@@ -11,9 +11,9 @@ class Yay
       array  = @position
       return "" unless @position
       length = array.length
-      return " at word #{array[0]}" if length == 1
-      return " on line #{array[1]}, word #{array[0]}" if length == 2
-      return " in file #{array[2]}, line #{array[1]}, word #{array[0]}" if length == 3
+      return " in file #{array[2]}, line #{array[1]}, word #{array[0]}" if array[2]
+      return " on line #{array[1]}, word #{array[0]}" if array[1]
+      return " at word #{array[0]}" if array[0]
       raise "junk position given to exception"
     end
   end
@@ -30,6 +30,20 @@ class Yay
     end
   end
   
+  class NotAllowedError < Error
+    attr :action
+    attr :path
+    
+    def initialize action, path
+      @action = action
+      @path   = path
+    end
+
+    def printable_message
+      return "You can't #{action} from here"
+    end
+  end
+	
   class CircularReferenceError < Error
     attr :current
     attr :path

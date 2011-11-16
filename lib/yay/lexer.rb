@@ -3,16 +3,22 @@ require 'yay/lexer_regex'
 
 class Yay  
   class Lexer
+		attr :context_name
     
-    def initialize(string="")
-      @position = 0
-      @line     = 1
+    def initialize(string="", context_name=nil)
+      @position     = 0
+      @line         = 1
+			@context_name = context_name
       
       # default to an empty string scanner. this provides us an endless number
       # of eofs
       use_string(string)
     end
-    
+   
+	def context_name= value
+		@context_name = value
+	end
+
     # take a string and begin scanning it
     def use_string(string)
       @scanner = StringScanner.new string
