@@ -12,7 +12,7 @@ task :gem do
 end
 
 desc "install gem"
-task :install do
+task :install => [:gem] do
 	sh "gem install #{gem_file} --no-rdoc --no-ri"
 end
 
