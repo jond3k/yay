@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.version      = sandbox::Yay::VERSION
 
   s.platform     = Gem::Platform::RUBY
-  s.summary      = "makes your logs colourful!"
+  s.summary      = "echo \"i like apples\" | yay apples are red"
   s.authors      = ["jon davey"]
   s.email        = "jond3k@gmail.com"
   s.homepage     = "http://github.com/jond3k/yay"
