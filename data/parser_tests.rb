@@ -1,5 +1,7 @@
 require 'yay/colour_wheel'
 class Yay
+  # much like the lexer tests, the keys of each entry is the test data and the
+  # values are arrays of expected results
 PARSER_TESTS = {
 
   # empty files

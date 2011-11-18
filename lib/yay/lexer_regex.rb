@@ -27,6 +27,9 @@ class Yay
       [:literal        , /\b\S+\b/],
     ]
     
+    # get the regular expressions we need. always use this instead of
+    # referencing the base patterns directly as we augment that array with
+    # the colour names that are available
     def get_patterns
       patterns = BASE_PATTERNS
       # add the colour keywords. generate these from the colour wheel's constants

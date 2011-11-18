@@ -2,6 +2,7 @@ require 'strscan'
 require 'yay/lexer_regex'
 
 class Yay  
+  # tokenises yay rules
   class Lexer
 		attr :context_name
     
@@ -15,19 +16,23 @@ class Yay
       use_string(string)
     end
    
-	def context_name= value
-		@context_name = value
-	end
+    # the context name describes the source yay rules. this is free-form
+    # text but is best set to the filename
+    def context_name= value
+      @context_name = value
+    end
 
     # take a string and begin scanning it
     def use_string(string)
       @scanner = StringScanner.new string
     end
     
+    # return the current word
     def position
       @position
     end
     
+    # return the current line
     def line
       @line
     end

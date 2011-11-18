@@ -1,10 +1,13 @@
 class Yay
+  # this data works on the basic assumption that the key is the source data and
+  # the value is an array of expected results. this allows us to easily test 
+  # varying combinations of text
 LEXER_TESTS = {
 
   # empty files
   ""  => [],
   " " => [],
-
+  
   # isolated colour
   "red" => [
     [:colour, "red"]

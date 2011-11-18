@@ -1,11 +1,13 @@
 require 'yay/paths'
 
 class Yay
+  # resolves the location of an include file
   class Loader
     def initialize filename
       @filename = filename
     end
 		
+    # get the default loader. this, um, loads the default.yay file!
 		def self.default_file_loader
 			return Yay::Loader.new Yay::Paths::DEFAULT_YAYFILE
 		end

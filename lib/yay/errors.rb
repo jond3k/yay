@@ -1,16 +1,19 @@
 
 class Yay
+  # the base class for errors in yay. this provides error reporting in a
+  # friendly way (who likes stack traces?)
   class Error < StandardError
     attr :position
     
+    # override this to provide user feedback
     def printable_message
       raise "Unimplemented printable error"
     end
     
+    # a generic representation of the error's location on the line, file, etc
     def printable_position
       array  = @position
       return "" unless @position
-      length = array.length
       return " in file #{array[2]}, line #{array[1]}, word #{array[0]}" if array[2]
       return " on line #{array[1]}, word #{array[0]}" if array[1]
       return " at word #{array[0]}" if array[0]
@@ -18,6 +21,8 @@ class Yay
     end
   end
   
+  # this error is raised when a variable has already been assigned a value
+  # for example @x is red and @x is blue
   class AlreadyAssignedError < Error
     attr :variable
     
@@ -30,6 +35,9 @@ class Yay
     end
   end
   
+  # this is a generic access control error that's raised when someoen tries to
+  # do something disallowed in their current context. for example, you can
+  # use the install command from the command line but not a yayfile
   class NotAllowedError < Error
     attr :action
     attr :path
@@ -44,6 +52,8 @@ class Yay
     end
   end
 	
+  # raised when there's a circular reference between rules. this happens when
+  # variables point back to themselves in some way. e.g. @x is @y and @y is @x
   class CircularReferenceError < Error
     attr :current
     attr :path
@@ -52,12 +62,14 @@ class Yay
       @current = current
       @path    = path
     end
-    
+
     def printable_message
       return "There is a circular reference between variables: #{path.join(' => ')} => #{current}#{printable_position}"
     end
   end
   
+  # raised when a variable has been referenced but not given a value. for example
+  # cheese is @x without ever defining what @x is
   class UnresolvedSubstitutionError < Error
     attr :variable
     
@@ -70,6 +82,7 @@ class Yay
     end
   end
   
+  # raised when include file resolution has failed
   class CouldntFindFileError < Error
     attr :filename
     attr :tried
@@ -84,6 +97,9 @@ class Yay
     end
   end
   
+  # raised when a colour sequence was malformed. in practice you can use
+  # infinite colour commands but zero to two actual colours, the first one will
+  # be the foreground and the second one will be the background
   class TooManyColoursError < Error
     attr :fg
     attr :bg
@@ -101,6 +117,9 @@ class Yay
     end
   end
   
+  # raised when an unexpected token was found by the parser. in otherwords,
+  # the rules of the syntax have been broken somehow and the user hasn't written
+  # a valid command
   class UnexpectedTokenError < Error
     attr :type
     attr :value
@@ -111,6 +130,7 @@ class Yay
       @position = position
     end
 
+    # add extra feedback for some tokens. help the user out!
     def extra_message
       return "Since #{value} has a special meaning, try enclosing it in quotes or a regex when searching for it" if type == "colour"
       return ""

@@ -21,7 +21,8 @@ class Yay
     def merge rules
       @rules = @rules | rules
     end
-    
+ 
+    # get the rules, complete with variable substitutions made
     def get_rules
       # ensure we substitute all variables
       substitute_variables if @string_to_var
@@ -79,6 +80,7 @@ class Yay
       return result
     end
     
+    # replace all references to variables with their actual colours
     def substitute_variables
       @string_to_var.each { |ref| 
         string   = ref[0]
