@@ -1,16 +1,14 @@
 #!/usr/bin/yay
 # Highlights syslog messages
 
-debug is normal
-informational is gray
-notice and warning are yellow
-error and alert are red
-critical and emergency are red lines
+debug, dbg are @boring
+/info(rmational)?/i are @normal
+notice, /warn(ing)?/i are @interesting
+/err(or)?/i and alert are @serious
+/crit(ical)?/i, /emerg(ency)?/i are @serious
 
-# some aliases
-dbg is normal
-info is gray
-notice and warn are yellow
-err and alert
-crit and emerg are red lines
+@boring is dim
+@normal is normal
+@interesting is inverted yellow
+@serious is inverted red
 

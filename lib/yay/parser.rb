@@ -64,7 +64,7 @@ class Yay
     end
 
     def handle_regex string
-      return string_to_regex string
+      return string_to_regex string, false
     end
 
     # for lack of a better function, this will take the ending sequence from
@@ -86,10 +86,11 @@ class Yay
     
     # for lack of a better function, this will take a string like "/abc/" and
     # transform it in to a regex object
-    def string_to_regex string
+    def string_to_regex string, escape=true
       matches = /\/([^\/\\\r\n]*(?:\\.[^\/\\\r\n]*)*)\/([a-z]\b)*/.match string
       return nil if matches[1].nil?
-      content = Regexp::escape(matches[1])
+      content = matches[1]
+	  content = Regexp::escape(content) if escape
       options = extract_regexp_options matches[2]
       return Regexp.new(content, options)
     end
