@@ -5,7 +5,7 @@ rule
 
   body: command_list                      {  }
       | literal                           { include_file val[0] }
-      | install literal                   { install_file val[1] }
+      | install literal literal           { install_file val[1], val[2] }
       | list_installed                    { list_installed }
       |									  { use_default_file }
 

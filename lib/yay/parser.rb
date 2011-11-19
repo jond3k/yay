@@ -13,18 +13,29 @@ class Yay
   # use .y files for anything other than grammar rules, even if they do allow
   # ruby code
   class Parser < Yay::ParserGen   
-		attr :allow_default
-		attr :allow_install
-		attr :allow_include
-		attr :allow_print
+
+    # allow this parser to load the default rule file if the rule body is empty
+		attr_accessor :allow_default
+
+    # allow this parser to install new rule files from remote sources. beware
+    # the consequences. this should be allowed from the command line only!
+		attr_accessor :allow_install
+
+    # allow this parser to include rule files that are installed. including
+    # ones in the gem folders, globally and locally
+		attr_accessor :allow_include
+
+    # allow this parser to search for and print out all the rules that are
+    # installed
+		attr_accessor :allow_list
+    
+    # set to true to signal to the application or parent parser that it's time
+    # to shut down
+    attr_reader :shutdown
 
 		def initialize context_name=nil
       @lexer = Yay::Lexer.new
 			@lexer.context_name = context_name
-		end
-
-		def allow_include= value
-			@allow_include = value
 		end
 		
 		# load a file from a url
@@ -36,21 +47,22 @@ class Yay
     end
 
 		# install a file from a url
-    def install_file url
+    def install_file file_name, url
 			raise NotAllowedError.new "install #{url}", current_position unless @allow_install
-      installer = Yay::Installer.new url
+      installer = Yay::Installer.new file_name, url
       installer.install
+      @shutdown = true
     end
     
 		# print the full list of yay files
     def list_installed
-			raise NotAllowedError.new "list installed yay files", current_position unless @allow_print
+			raise NotAllowedError.new "list installed yay files", current_position unless @allow_list
       # TODO
     end
 		
 		# allow all parser actions
 		def allow_all= value
-			@allow_default = @allow_install = @allow_include = @allow_print = value
+			@allow_default = @allow_install = @allow_include = @allow_list = value
 		end
 
 		# load the default file. used when the commandline is empty

@@ -7,7 +7,7 @@ class Yay
 		attr :context_name
     
     def initialize(string="", context_name=nil)
-      @position     = 0
+      @position     = 1
       @line         = 1
 			@context_name = context_name
       

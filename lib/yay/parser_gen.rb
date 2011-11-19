@@ -15,37 +15,39 @@ module_eval(<<'...end grammar.y/module_eval...', 'grammar.y', 54)
 ##### State transition tables begin ###
 
 racc_action_table = [
-    -7,   -25,    32,    17,    25,    17,   -25,    12,    22,    22,
-    32,    20,    30,     9,    10,    12,     2,     4,     8,     9,
-    10,    12,    28,    35,    19,    29,    29,    -2,    17,    37,
-    29,    37 ]
+    -7,   -25,    33,    17,    25,    17,   -25,    12,    22,    22,
+    33,    20,    30,     9,    10,    12,     2,     4,     8,     9,
+    10,    12,    28,    36,    31,    29,    29,    19,    -2,    17,
+    38,    29,    38 ]
 
 racc_action_check = [
      7,     6,    21,    17,    10,     9,     6,    21,     6,     7,
     23,     4,    19,    23,    23,    23,     0,     0,     0,     0,
-     0,     0,    18,    24,     3,    18,    24,     2,     1,    27,
-    29,    34 ]
+     0,     0,    18,    24,    20,    18,    24,     3,     2,     1,
+    27,    29,    35 ]
 
 racc_action_pointer = [
-    14,    17,    27,    24,     9,   nil,    -1,     0,   nil,    -6,
+    14,    18,    28,    27,     9,   nil,    -1,     0,   nil,    -6,
      2,   nil,   nil,   nil,   nil,   nil,   nil,    -8,    17,    12,
-   nil,     0,   nil,     8,    18,   nil,   nil,    19,   nil,    22,
-   nil,   nil,   nil,   nil,    21,   nil,   nil,   nil,   nil,   nil ]
+    22,     0,   nil,     8,    18,   nil,   nil,    20,   nil,    23,
+   nil,   nil,   nil,   nil,   nil,    22,   nil,   nil,   nil,   nil,
+   nil ]
 
 racc_action_default = [
     -5,   -29,   -20,   -30,   -30,    -1,   -19,   -25,    -4,   -29,
    -30,    -8,   -21,    -9,   -10,   -11,   -12,   -29,   -30,   -30,
-    -3,   -30,   -24,   -30,   -30,   -17,   -28,   -27,   -14,   -23,
-    40,   -18,   -20,    -6,   -27,   -16,   -13,   -26,   -22,   -15 ]
+   -30,   -30,   -24,   -30,   -30,   -17,   -28,   -27,   -14,   -23,
+    41,    -3,   -18,   -20,    -6,   -27,   -16,   -13,   -26,   -22,
+   -15 ]
 
 racc_goto_table = [
-     5,    18,    27,    36,    21,    23,    31,     3,    34,    24,
-    39,   nil,   nil,    38,   nil,   nil,   nil,    26,   nil,   nil,
-   nil,   nil,   nil,    33 ]
+     5,    18,    27,    37,    21,    23,    32,     3,    35,    24,
+   nil,    40,   nil,    39,   nil,   nil,   nil,    26,   nil,   nil,
+   nil,   nil,   nil,    34 ]
 
 racc_goto_check = [
      2,    11,    12,    13,     4,     4,    10,     1,    12,    11,
-    13,   nil,   nil,    12,   nil,   nil,   nil,    11,   nil,   nil,
+   nil,    13,   nil,    12,   nil,   nil,   nil,    11,   nil,   nil,
    nil,   nil,   nil,     2 ]
 
 racc_goto_pointer = [
@@ -60,7 +62,7 @@ racc_reduce_table = [
   0, 0, :racc_error,
   1, 13, :_reduce_1,
   1, 13, :_reduce_2,
-  2, 13, :_reduce_3,
+  3, 13, :_reduce_3,
   1, 13, :_reduce_4,
   0, 13, :_reduce_5,
   3, 14, :_reduce_6,
@@ -90,7 +92,7 @@ racc_reduce_table = [
 
 racc_reduce_n = 30
 
-racc_shift_n = 40
+racc_shift_n = 41
 
 racc_token_table = {
   false => 0,
@@ -177,7 +179,7 @@ module_eval(<<'.,.,', 'grammar.y', 6)
 
 module_eval(<<'.,.,', 'grammar.y', 7)
   def _reduce_3(val, _values, result)
-     install_file val[1] 
+     install_file val[1], val[2] 
     result
   end
 .,.,

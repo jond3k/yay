@@ -3,7 +3,7 @@ class Yay
   # the base class for errors in yay. this provides error reporting in a
   # friendly way (who likes stack traces?)
   class Error < StandardError
-    attr :position
+    attr_reader :position
     
     # override this to provide user feedback
     def printable_message
@@ -21,10 +21,47 @@ class Yay
     end
   end
   
+  # thrown when an invalid filename was entered
+  class BadFilenameError < Error  
+    attr_reader :value
+    attr_reader :message
+    
+    def initialize value
+      @value   = value
+    end
+    
+    def printable_message
+      return "Invalid filename #{value} entered"
+    end
+  end
+  
+  # this error wraps an underlying error
+  class InstallFailedError < Error
+    MAX_LENGTH = 1028
+    
+    attr_reader :error
+    attr_reader :url
+    attr_reader :content
+    
+    def initialize url, error, content=nil
+      @url     = url
+      @error   = error
+      @content = content
+      @content = 'empty' if (content==nil||content.strip=="")
+      if @content.length >= InstallFailedError::MAX_LENGTH
+        @content = "#{@content.slice(0,InstallFailedError::MAX_LENGTH)}\n.."
+      end
+    end
+    
+    def printable_message
+      return "Failed to download and install file from #{url}\nReason: #{error}\nResponse was:\n#{content}\nCheck your url!"
+    end
+  end
+  
   # this error is raised when a variable has already been assigned a value
   # for example @x is red and @x is blue
   class AlreadyAssignedError < Error
-    attr :variable
+    attr_reader :variable
     
     def initialize variable
       @variable = variable
@@ -39,8 +76,8 @@ class Yay
   # do something disallowed in their current context. for example, you can
   # use the install command from the command line but not a yayfile
   class NotAllowedError < Error
-    attr :action
-    attr :path
+    attr_reader :action
+    attr_reader :path
     
     def initialize action, path
       @action = action
@@ -55,8 +92,8 @@ class Yay
   # raised when there's a circular reference between rules. this happens when
   # variables point back to themselves in some way. e.g. @x is @y and @y is @x
   class CircularReferenceError < Error
-    attr :current
-    attr :path
+    attr_reader :current
+    attr_reader :path
     
     def initialize current, path
       @current = current
@@ -71,7 +108,7 @@ class Yay
   # raised when a variable has been referenced but not given a value. for example
   # cheese is @x without ever defining what @x is
   class UnresolvedSubstitutionError < Error
-    attr :variable
+    attr_reader :variable
     
     def initialize variable
       @variable = variable
@@ -84,8 +121,8 @@ class Yay
   
   # raised when include file resolution has failed
   class CouldntFindFileError < Error
-    attr :filename
-    attr :tried
+    attr_reader :filename
+    attr_reader :tried
     
     def initialize filename, tried
       @filename = filename
@@ -101,9 +138,9 @@ class Yay
   # infinite colour commands but zero to two actual colours, the first one will
   # be the foreground and the second one will be the background
   class TooManyColoursError < Error
-    attr :fg
-    attr :bg
-    attr :colour
+    attr_reader :fg
+    attr_reader :bg
+    attr_reader :colour
     
     def initialize fg, bg, colour, position
       @fg       = fg
@@ -121,8 +158,8 @@ class Yay
   # the rules of the syntax have been broken somehow and the user hasn't written
   # a valid command
   class UnexpectedTokenError < Error
-    attr :type
-    attr :value
+    attr_reader :type
+    attr_reader :value
     
     def initialize type, value, position
       @type     = type
@@ -133,10 +170,13 @@ class Yay
     # add extra feedback for some tokens. help the user out!
     def extra_message
       return "Since #{value} has a special meaning, try enclosing it in quotes or a regex when searching for it" if type == "colour"
+      return "Have you finished the line off properly?" if type == "$end"
       return ""
     end
 
     def printable_message
+      return "Unexpected text \"#{value}\"#{printable_position}\n#{extra_message}" if type == "error"
+      return "Unexpected end #{printable_position}\n#{extra_message}" if type == "$end"
       return "Unexpected #{type} \"#{value}\"#{printable_position}\n#{extra_message}"
     end
   end

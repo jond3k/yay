@@ -48,14 +48,19 @@ class Yay
       return if preArg == DO_NOTHING_ARG
       
       begin      
-      
+
         @parser = Yay::Parser.new
 				@parser.allow_all = true
         @parser.parse_array(@args)
         @rules = @parser.get_rules
 
+        # the parser may instruct us to shut down
+        if @parser.shutdown
+          return
+        end
+
         @colourizer = Yay::Colourizer.new @rules, @input, @output
-        
+
         if preArg == DUMP_RULES_ARG
           dump_colours @colourizer.line_rules, @colourizer.part_rules
           return
