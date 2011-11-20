@@ -70,7 +70,7 @@ class Yay
 
       # provide readable text for internal errors
       rescue Yay::Error => error
-        @error.puts error.printable_message
+        @error.puts "#{ColourWheel::fail}#{error.printable_message}#{ColourWheel::end_colour}"
 
       # catch ctrl+c and similar events
       rescue Interrupt

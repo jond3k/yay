@@ -176,7 +176,7 @@ class Yay
 
     def printable_message
       return "Unexpected text \"#{value}\"#{printable_position}\n#{extra_message}" if type == "error"
-      return "Unexpected end #{printable_position}\n#{extra_message}" if type == "$end"
+      return "Unexpected end of line#{printable_position}\n#{extra_message}" if type == "$end"
       return "Unexpected #{type} \"#{value}\"#{printable_position}\n#{extra_message}"
     end
   end

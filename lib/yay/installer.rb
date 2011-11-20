@@ -50,8 +50,9 @@ class Yay
           begin
             FileUtils.mkdir_p dir
             #FileUtils.chmod 0644, dir 
-            puts "Created #{dir}"
-            return can_write_to_dir dir, false
+            result = can_write_to_dir dir, false
+            puts "Created #{dir}" if result
+            return result
           rescue Errno::EACCES
           end
         end
@@ -119,7 +120,7 @@ class Yay
       File.open(dest, 'w') {|file|
         file.write(string)
       }
-      puts "Installed to #{dest}"
+      puts "#{ColourWheel::success}Installed to #{dest}#{ColourWheel::end_colour}"
     end
     
     # attempt the installation process
