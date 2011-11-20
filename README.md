@@ -45,6 +45,7 @@ you can load rules from .yay files, some of which are included
 
 you can download and install yay files from anywhere, including github gists  
 
-    $ yay install https://gist.github.com/1361474
+    $ yay install my_rule https://raw.github.com/gist/1361474/cf1c2522f1c4df7f8d2d49da2d6186b530f5a3dd/log4x  
+    $ echo "omg we have an unhandled exception" | yay my_rule  
 
 have fun! :D  
