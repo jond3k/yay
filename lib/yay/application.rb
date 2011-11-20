@@ -77,7 +77,7 @@ class Yay
       end
       
       # emit the end colour just in case we were interrupted
-      puts ColourWheel.end_colour
+      print ColourWheel.end_colour
     end
     
     # with the --dump command we can see the resulting rules created by the
