@@ -7,8 +7,8 @@ notice, /warn(ing)?/i are @interesting
 /err(or)?/i and alert are @serious
 /crit(ical)?/i, /emerg(ency)?/i are @serious
 
-@boring is dim
+@boring are dim lines
 @normal is normal
-@interesting is inverted yellow
-@serious is inverted red
+@interesting are yellow lines
+@serious are red lines
 
