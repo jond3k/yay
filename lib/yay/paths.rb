@@ -20,12 +20,16 @@ class Yay
 
 		# get all the paths where we might be able to find .yay files
 		def yay_paths
-			result = [local_yay_path,global_yay_path]
+			result = [current_path,local_yay_path,global_yay_path]
 			gempaths.each { |v| 
 				result.push gempath_to_yaypath(v)
 			}
 			return result
 		end
+
+    def current_path
+      return '.'
+    end
 
 		def global_yay_path
 			return '/etc/yay'
