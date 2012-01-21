@@ -1,12 +1,12 @@
 #!/usr/bin/yay
 
-# Latin characters used in a DNA or RNA sequence have poor legibility. This
-# script helps with that by giving each character a distinct colour as if they
-# were still compounds in a capillary tube that have been dyed florescent.
+# Latin characters used DNA and RNA sequences have poor legibility. This script
+# helps with that by giving each character a distinct colour, vaguely similar
+# to the florescent dyes used during sequencing.
 # 
 # The colours I have chosen were taken from [1] and work best on a black screen.
 # This will have to do until AmbiScript [2] characters have been given Unicode
-# codepoints.
+# codepoints!
 #
 # 1. http://biology.kenyon.edu/courses/biol114/Chap08/Chapter_08a.html
 # 2. http://www.biotechniques.com/multimedia/archive/00003/BTN_A_000112727_O_3654a.pdf
