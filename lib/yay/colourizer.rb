@@ -77,7 +77,11 @@ class Yay
           line.gsub!(rule[0], "#{rule[1]}\\0#{end_colour}")
         }
 
-        @output.puts line
+        begin
+          @output.puts line
+        rescue Errno::EPIPE
+          # ignore the Broken Pipe error that is caused by tools like head
+        end
       }
     end
   end
