@@ -18,7 +18,7 @@ class Yay
     def parse_string string, context_name
       # invoke a new parser and return the rules it finds
       parser = Yay::Parser.new context_name
-			parser.allow_include = true
+      parser.allow_include = true
       return parser.parse string
     end
     	

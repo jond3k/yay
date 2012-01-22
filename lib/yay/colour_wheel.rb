@@ -17,6 +17,7 @@ class Yay
 			:invert      => 7, #alias
 			:inverted    => 7, #alias
 			:underscored => 4, #alias
+      :bold        => 1, #alias
 		}
 
 		# foreground colours

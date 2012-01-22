@@ -1,6 +1,7 @@
 require 'yay/parser_gen'
 require 'yay/lexer'
 require 'yay/colour_wheel'
+require 'yay/autoformatter'
 require 'yay/rule_set'
 require 'yay/loader'
 require 'yay/installer'
@@ -15,20 +16,12 @@ class Yay
 	# ruby code
 	class Parser < Yay::ParserGen   
 
-		# allow this parser to load the default rule file if the rule body is empty
-		attr_accessor :allow_default
-
-		# allow this parser to install new rule files from remote sources. beware
-		# the consequences. this should be allowed from the command line only!
-		attr_accessor :allow_install
-
-		# allow this parser to include rule files that are installed. including
-		# ones in the gem folders, globally and locally
-		attr_accessor :allow_include
-
-		# allow this parser to search for and print out all the rules that are
-		# installed
-		attr_accessor :allow_list
+		# restricted mode is on by default. this prevents people from doing things
+    # like installing new files from within files
+		attr_accessor :allow_restricted
+    
+    # a subset of restricted mode which allows include files
+    attr_accessor :allow_include
 
 		# set to true to signal to the application or parent parser that it's time
 		# to shut down
@@ -39,6 +32,23 @@ class Yay
 			@lexer.context_name = context_name
 		end
 
+    # tries to include a file if it exists; otherwise autoformats
+    def include_or_autoformat strings
+      begin
+        include_file strings[0].source
+      rescue Yay::CouldntFindFileError
+        # autoformat if we're on the commandline otherwise this doesn't make
+        # sense
+        autoformat strings if @allow_restricted
+      end
+    end
+    
+    # takes strings without colours and automatically assigns one to each
+    def autoformat strings
+      autoformatter = Yay::Autoformatter.new
+      @ruleset.merge autoformatter.get_rules strings
+    end
+    
 		# load a file from a url
 		def include_file filename
 			raise NotAllowedError.new "include #{filename}", current_position unless @allow_include
@@ -49,7 +59,7 @@ class Yay
 
 		# install a file from a url
 		def install_file file_name, url
-			raise NotAllowedError.new "install #{url}", current_position unless @allow_install
+			raise NotAllowedError.new "install #{url}", current_position unless @allow_restricted
 			installer = Yay::Installer.new file_name, url
 			installer.install
 			@shutdown = true
@@ -57,21 +67,26 @@ class Yay
 
 		# print the full list of yay files
 		def list_installed
-			raise NotAllowedError.new "list installed yay files", current_position unless @allow_list
+			raise NotAllowedError.new "list installed yay files", current_position unless @allow_restricted
 			lister = Yay::Lister.new 
       lister.print
       @shutdown = true
 		end
 
 		# allow all parser actions
-		def allow_all= value
-			@allow_default = @allow_install = @allow_include = @allow_list = value
+		def allow_restricted= value
+			@allow_include = @allow_restricted = value
 		end
 
+    # allow the including of files
+		def allow_include= value
+			@allow_include = value
+		end
+    
 		# load the default file. used when the commandline is empty
 		def use_default_file
 			# don't throw an error in this case. it's legitimate for a file to be empty
-			return unless @allow_default
+			return unless @allow_restricted
 			loader = Yay::Loader.default_file_loader
 			loader.load
 			@ruleset.merge loader.get_rules
@@ -108,6 +123,8 @@ class Yay
 		# for lack of a better function, this will take a string like "/abc/" and
 		# transform it in to a regex object
 		def string_to_regex string, escape=true
+      # extract the constituent part of the regexp. in ruby 1.8 we can't just
+      # create a regex from a perl-style regex literal like /abc/i
 			matches = /\/([^\/\\\r\n]*(?:\\.[^\/\\\r\n]*)*)\/([a-z]\b)*/.match string
 			return nil if matches[1].nil?
 			content = matches[1]

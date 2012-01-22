@@ -4,10 +4,10 @@ class ParserGen
 rule
 
   body: command_list                      {  }
-      | literal                           { include_file val[0] }
       | install literal literal           { install_file val[1], val[2] }
       | list_installed                    { list_installed }
-      |									  { use_default_file }
+      | string_list                       { include_or_autoformat val[0] }
+      |                                   { use_default_file }
 
   command_list: command and_opt command_list      {  }
               | command                           {  }
