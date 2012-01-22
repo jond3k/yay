@@ -76,9 +76,6 @@ class Yay
       return line
     end
     
-    def write_line(line)
-      
-    end
     # create a pipe between the input and output streams, applying colour rules
     # to every line that appears. only an interrupt, end of file or exception 
     # will end this process
