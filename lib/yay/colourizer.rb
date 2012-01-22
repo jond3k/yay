@@ -10,6 +10,12 @@ class Yay
       colourize_rules rules
       @input   = input
       @output  = output
+      
+      # this is the colour we'll use when we haven't already applied a colour
+      # we remember the previous choice as we can colourize words within a line
+      # that's already been coloured
+      @default_end_colour = ColourWheel::end_colour
+      @end_colour = @default_end_colour
     end
     
     # get the rules that are applied to a whole line if it contains matching text
@@ -46,43 +52,48 @@ class Yay
         end
       }
     end
-
+    
+    # apply all rules that span the entire line
+    def apply_line_rules line
+      # track the line_rules end colour so we can return to this after each
+      # match
+      @line_rules.each { |rule| 
+        if line.match(rule[0])
+          line = "#{rule[1]}#{line.rstrip}#{@default_end_colour}"
+          @end_colour = rule[1]
+          # leave loop; only allow one line match per line
+          break
+        end
+      }
+      return line
+    end
+    
+    # apply all partial rules
+    def apply_word_rules line
+      @part_rules.each { |rule|
+        line = line.gsub(rule[0], "#{rule[1]}\\0#{@end_colour}")
+      }
+      return line
+    end
+    
+    def write_line(line)
+      
+    end
     # create a pipe between the input and output streams, applying colour rules
     # to every line that appears. only an interrupt, end of file or exception 
     # will end this process
     def colourize_pipe
-      # this is the colour we'll use when we haven't already applied a colour
-      # we remember the previous colour as we can colourize words within a line
-      # that's already been coloured
-      default_end_colour = ColourWheel::end_colour
-      
-      @input.each_line { |line|
+      @end_colour = @default_end_colour
 
-        # track the line_rules end colour so we can return to this after each
-        # match
-        end_colour = default_end_colour
-
-        # apply all line rules
-        @line_rules.each { |rule| 
-          if line.match(rule[0])
-            line = "#{rule[1]}#{line.rstrip}#{default_end_colour}"
-            end_colour = rule[1]
-            # leave loop; only allow one line match per line
-            break
-          end
-        }
-
-        # apply all partial rules
-        @part_rules.each { |rule|
-          line.gsub!(rule[0], "#{rule[1]}\\0#{end_colour}")
-        }
-
-        begin
+      begin
+        @input.each_line { |line|        
+          line = apply_line_rules(line)
+          line = apply_word_rules(line)
           @output.puts line
-        rescue Errno::EPIPE
-          # ignore the Broken Pipe error that is caused by tools like head
-        end
-      }
-    end
+        }
+      end
+      rescue Errno::EPIPE
+        # ignore the Broken Pipe error that is caused by tools like head
+      end
   end
 end
