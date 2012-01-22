@@ -81,16 +81,16 @@ class Yay
     # will end this process
     def colourize_pipe
       @end_colour = @default_end_colour
-
       begin
-        @input.each_line { |line|        
+        @input.each_line { |line|
           line = apply_line_rules(line)
           line = apply_word_rules(line)
           @output.puts line
         }
-      end
       rescue Errno::EPIPE
         # ignore the Broken Pipe error that is caused by tools like head
       end
+    end
+    
   end
 end
