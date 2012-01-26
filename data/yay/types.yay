@@ -1,0 +1,23 @@
+#!/usr/bin/yay
+
+# Matches common filenames and extensions so that you can quickly discover
+# information about a directory structure using ls or tree
+
+/\b\w*\.(png|gif|jpg|jpeg|svg)\b/i          is @image
+/\b\w*\.(txt|html|md|css)\b/i               is @doc
+/\b\w*\.(xml|json|properties|manifest)\b/i  is @config
+
+/\b\w*\.(sh|bash|yay)\b/i                      is @shell
+/\b\w*\.(php|py|rb|pl|r|pm|ssi|shtml)\b/i      is @script
+/\b\w*\.(java|scala)\b/i                       is @jvm
+/\b\w*\.(h|c|cc|cpp|cxx)\b/i                   is @c
+
+@image    is @resource
+@config   is @resource
+@doc      is @resource
+@resource is green
+
+@shell  is dim
+@jvm    is red
+@c      is blue
+@script is magenta
